@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>دوّر — معرض العربيات في مصر</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lalezar&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0B1F4A;--deep:#061232;--amber:#FFB429;--steel:#8EA0C4;--bg:#F4F6FB;--surface:#fff;--text:#0B1F4A;--muted:#52618a;--line:#d9e0ef;
+--disp:'Lalezar','Cairo',Tahoma,sans-serif;--body:'IBM Plex Sans Arabic','Cairo',Tahoma,sans-serif;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#081535;--surface:#0f2250;--text:#eef2fb;--muted:#a7b5d6;--line:#233669}}
+:root[data-theme="dark"]{--bg:#081535;--surface:#0f2250;--text:#eef2fb;--muted:#a7b5d6;--line:#233669}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--text);font:400 17px/1.7 var(--body)}
+a{color:inherit}
+button,select{font:inherit}
+:focus-visible{outline:3px solid var(--amber);outline-offset:3px}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+.hero{background:var(--navy);color:#fff;padding-bottom:56px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:auto 0 0;height:6px;background:repeating-linear-gradient(to left,var(--amber) 0 36px,transparent 36px 64px);opacity:.9}
+nav{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 0}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo b{font:400 38px/1 var(--disp)}
+.logo small{display:block;font-size:12px;color:var(--steel);letter-spacing:.14em;margin-top:2px;direction:ltr;text-align:right}
+nav ul{display:flex;gap:22px;list-style:none;margin:0;padding:0}
+nav li a{text-decoration:none;color:var(--steel);font-weight:500}
+nav li a:hover{color:#fff}
+.btn{display:inline-block;border:0;border-radius:10px;padding:11px 20px;font-weight:600;cursor:pointer;text-decoration:none;background:var(--amber);color:var(--deep)}
+.btn.ghost{background:transparent;color:inherit;border:2px solid currentColor}
+.btn:hover{filter:brightness(1.07)}
+h1{font:400 clamp(52px,11vw,112px)/1.02 var(--disp);margin:34px 0 8px}
+.lead{color:var(--steel);max-width:34em;margin:0 0 30px}
+.budget{background:var(--deep);border-radius:16px;padding:22px;max-width:760px}
+.budget output{display:block;font:400 clamp(34px,7vw,52px)/1.1 var(--disp);color:var(--amber)}
+.budget output span{font-size:.45em;color:var(--steel);margin-inline-start:8px}
+input[type=range]{width:100%;margin:18px 0 12px;accent-color:var(--amber);height:34px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1.5px solid #34497f;background:transparent;color:#fff;border-radius:999px;padding:5px 16px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--amber);border-color:var(--amber);color:var(--deep);font-weight:600}
+.filters{display:flex;flex-wrap:wrap;gap:12px;margin-top:16px;align-items:center}
+.filters select{background:#0f2250;color:#fff;border:1.5px solid #34497f;border-radius:10px;padding:8px 12px}
+section{padding:56px 0}
+h2{font:400 clamp(32px,6vw,46px)/1.15 var(--disp);margin:0 0 6px}
+.sub{color:var(--muted);margin:0 0 28px}
+#count{font-weight:600;margin:0 0 18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px}
+.card{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+.card.res{opacity:.72}
+.art{background:linear-gradient(160deg,var(--c),#0B1F4A);padding:18px 14px 6px;position:relative}
+.art svg{width:100%;height:auto;display:block;fill:rgba(255,255,255,.92)}
+.art svg .w{fill:var(--c)}
+.tag{position:absolute;top:10px;inset-inline-start:10px;background:var(--deep);color:#fff;font-size:13px;border-radius:6px;padding:1px 10px}
+.tag.ok::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:#4ade80;margin-inline-end:6px}
+.tag.rs::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--amber);margin-inline-end:6px}
+.info{padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px;flex:1}
+.info h3{margin:0;font:400 26px/1.2 var(--disp)}
+.meta{color:var(--muted);font-size:15px;margin:0}
+.price{font:400 30px/1.1 var(--disp);margin-top:4px}
+.rev{font-size:13px;color:var(--muted)}
+.acts{display:flex;gap:10px;align-items:center;margin-top:auto;padding-top:10px}
+.acts .btn{flex:1;text-align:center;padding:9px 12px}
+.cmp{display:flex;align-items:center;gap:6px;font-size:14px;color:var(--muted);cursor:pointer}
+.empty{background:var(--surface);border:2px dashed var(--line);border-radius:14px;padding:34px;text-align:center}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0;border-block:1px solid var(--line)}
+.step{padding:26px 22px;border-inline-start:1px solid var(--line)}
+.step:first-child{border-inline-start:0}
+.step b{font:400 28px/1.2 var(--disp);display:block;margin-bottom:6px}
+.step p{margin:0;color:var(--muted)}
+.sell{background:var(--navy);color:#fff}
+.sell .sub{color:var(--steel)}
+.pk{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.pkg{border:1.5px solid #34497f;border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:10px}
+.pkg.hot{border-color:var(--amber);background:var(--deep)}
+.pkg h3{margin:0;font:400 30px/1.1 var(--disp)}
+.pkg ul{margin:0;padding-inline-start:20px;color:#cdd7ee;flex:1}
+.note{margin-top:20px;color:var(--steel);font-size:15px}
+.trust{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:26px}
+.trust h3{font:400 26px/1.2 var(--disp);margin:0 0 6px}
+.trust p{margin:0;color:var(--muted)}
+footer{background:var(--deep);color:var(--steel);padding:30px 0 34px;font-size:15px}
+footer .logo b{color:#fff}
+#bar{position:fixed;inset-inline:0;bottom:0;background:var(--amber);color:var(--deep);padding:12px 20px calc(12px + env(safe-area-inset-bottom,0px));display:none;justify-content:space-between;align-items:center;gap:12px;z-index:5;font-weight:600}
+#bar.on{display:flex}
+#bar .btn{background:var(--deep);color:#fff}
+dialog{border:0;border-radius:16px;padding:22px;max-width:min(94vw,820px);width:100%;background:var(--surface);color:var(--text)}
+dialog::backdrop{background:rgba(6,18,50,.7)}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:480px}
+th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:start}
+th{font:400 20px var(--disp)}
+td:first-child{color:var(--muted)}
+@media (max-width:700px){nav ul{display:none}.step{border-inline-start:0;border-top:1px solid var(--line)}.step:first-child{border-top:0}}
+@media (prefers-reduced-motion:no-preference){h1{animation:up .7s ease both}@keyframes up{from{opacity:0;transform:translateY(18px)}}}
+
+html{scroll-behavior:auto}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+.hero h1{font-size:clamp(40px,7.4vw,80px);max-width:12em}
+.plates{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:18px;margin-top:34px}
+.plate{--r:-1.4deg;background:#F6F5EE;border:0;border-radius:12px;padding:0 0 12px;cursor:pointer;color:#0B1F4A;font:inherit;overflow:hidden;box-shadow:inset 0 0 0 3px #F6F5EE,inset 0 0 0 5px #0B1F4A;transform:rotate(var(--r));transition:transform .18s}
+.plate:nth-child(even){--r:1.2deg}.plate:nth-child(3n){--r:-.6deg}
+.plate:hover,.plate[aria-pressed="true"]{transform:rotate(0) translateY(-5px)}
+.plate[aria-pressed="true"]{box-shadow:inset 0 0 0 3px #F6F5EE,inset 0 0 0 5px #0B1F4A,0 0 0 4px #fff}
+.plate i{display:block;font-style:normal;background:#0B1F4A;color:#fff;font-size:12px;line-height:1.5;margin:10px 10px 0;border-radius:4px 4px 0 0}
+.plate b{display:block;font:400 clamp(30px,4.2vw,38px)/1.2 var(--disp);padding:8px 6px 0}
+.plate small{display:block;font-size:14px;font-weight:600;padding:0 6px}
+.plate.yo{background:var(--amber);box-shadow:inset 0 0 0 3px var(--amber),inset 0 0 0 5px #0B1F4A}
+.plate.yo[aria-pressed="true"]{box-shadow:inset 0 0 0 3px var(--amber),inset 0 0 0 5px #0B1F4A,0 0 0 4px #fff}
+.chips.lt{margin-bottom:14px}
+.chips.lt .chip{color:var(--text);border-color:var(--line)}
+.chips.lt .chip[aria-pressed="true"]{background:var(--amber);border-color:var(--amber);color:var(--deep)}
+a.art{display:block;text-decoration:none}
+.info h3 a{text-decoration:none}
+.info h3 a:hover{text-decoration:underline}
+#detail{padding:20px 0 70px}
+.back{display:inline-block;margin:10px 0 18px;font-weight:600}
+.dg{display:grid;grid-template-columns:1.1fr 1fr;gap:30px;align-items:start}
+@media (max-width:800px){.dg{grid-template-columns:1fr}}
+.dg .art{border-radius:16px;padding:44px 26px 22px}
+.spec{min-width:0;margin:14px 0 18px}
+.fts{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 0}
+.fts span{border:1px solid var(--line);border-radius:999px;padding:1px 14px;font-size:15px}
+.big{display:block;text-align:center;font-size:18px;padding:14px 22px}
+
+/* Added marketplace features — keeps the original Dawwar visual language */
+.nav-fav{display:inline-flex;align-items:center;gap:7px;text-decoration:none;color:var(--steel);font-weight:600;white-space:nowrap}
+.nav-fav:hover{color:#fff}
+.fav-count{display:inline-grid;place-items:center;min-width:22px;height:22px;padding:0 5px;border-radius:99px;background:var(--amber);color:var(--deep);font-size:12px;font-weight:700}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:14px;flex-wrap:wrap}
+.featured-section{padding-top:34px;padding-bottom:34px}
+.featured-section .sub{margin-bottom:18px}
+.featured-card{border-color:rgba(255,180,41,.72);box-shadow:0 8px 24px rgba(11,31,74,.07)}
+.art{display:block;text-decoration:none;position:relative;aspect-ratio:16/10;padding:0;overflow:hidden;background:#e6eaf1}
+.art img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .35s ease}
+.card:hover .art img{transform:scale(1.035)}
+.art.image-failed:after{content:'الصورة غير متاحة';position:absolute;inset:0;display:grid;place-items:center;color:#52618a;background:#e6eaf1;font-weight:600}
+.card-tags{position:absolute;top:10px;inset-inline-start:10px;display:flex;flex-wrap:wrap;gap:6px;z-index:2}
+.tag{position:static;display:inline-block}
+.tag.featured{background:var(--amber);color:var(--deep)}
+.tag.sold{background:#7b2334;color:#fff}
+.tag.reserved{background:#6b4b14;color:#fff}
+.card-tools{position:absolute;top:10px;inset-inline-end:10px;display:flex;gap:7px;z-index:3}
+.icon-btn{border:0;display:inline-grid;place-items:center;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.95);color:var(--navy);cursor:pointer;box-shadow:0 2px 9px rgba(0,0,0,.14);font-size:20px;line-height:1}
+.icon-btn.active{color:#c0264b}
+.icon-btn:hover{transform:translateY(-1px)}
+.card .rev{display:block}
+.body-types{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:13px}
+.body-type{border:1px solid var(--line);background:var(--surface);color:var(--text);border-radius:14px;padding:16px 14px;text-align:start;cursor:pointer;transition:border-color .18s,transform .18s,box-shadow .18s}
+.body-type:hover{border-color:var(--navy);transform:translateY(-2px);box-shadow:0 7px 20px rgba(11,31,74,.08)}
+.body-type[aria-pressed="true"]{background:rgba(255,180,41,.13);border-color:var(--amber);transform:translateY(-2px);box-shadow:0 0 0 2px rgba(255,180,41,.18),0 7px 20px rgba(11,31,74,.08)}
+.body-type strong{display:block;font:400 24px/1.3 var(--disp)}
+.body-type small{color:var(--muted)}
+.models-panel{margin-top:22px;padding:18px;background:var(--surface);border:1px solid var(--line);border-radius:14px}
+.models-panel h3{margin:0 0 12px;font:400 24px/1.3 var(--disp)}
+.model-chips{display:flex;flex-wrap:wrap;gap:9px}
+.model-chip{border:1px solid var(--line);background:var(--bg);color:var(--text);border-radius:999px;padding:8px 15px;cursor:pointer}
+.model-chip:hover,.model-chip[aria-pressed="true"]{background:var(--navy);color:#fff;border-color:var(--navy)}
+.model-chip small{opacity:.72;margin-inline-start:6px}
+.filters-panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:20px}
+.filters-panel .filters{margin-top:0}
+.filters-panel input,.filters-panel select{min-height:44px;border:1px solid var(--line);background:var(--bg);color:var(--text);border-radius:9px;padding:8px 11px;max-width:100%}
+.filters-panel input[type=search]{flex:1;min-width:190px}
+.filters-panel input[type=number]{width:145px}
+.filters-panel select{min-width:145px}
+.clear-filters{border:1px solid var(--line);border-radius:9px;padding:9px 13px;background:transparent;color:var(--text);cursor:pointer}
+.favorites-section{padding-top:30px;padding-bottom:30px}
+.favorites-section .empty{margin-top:12px}
+.acts .cmp{white-space:nowrap}
+.detail-gallery{min-width:0}
+.gallery-main{position:relative;border-radius:16px;overflow:hidden;background:#e6eaf1;aspect-ratio:16/10}
+.gallery-main>.tag{position:absolute;top:12px;inset-inline-start:12px;z-index:1}
+.gallery-main img{width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in}
+.gallery-main .tag{position:absolute;top:12px;inset-inline-start:12px;z-index:1}
+.gallery-count{position:absolute;bottom:12px;inset-inline-start:12px;background:rgba(6,18,50,.78);color:#fff;border-radius:7px;padding:3px 9px;font-size:13px}
+.gallery-thumbs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin-top:10px}
+.gallery-thumb{border:2px solid transparent;border-radius:9px;overflow:hidden;padding:0;background:#e6eaf1;aspect-ratio:4/3;cursor:pointer}
+.gallery-thumb.active{border-color:var(--amber)}
+.gallery-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.gallery-disclaimer{font-size:12px;color:var(--muted);margin:8px 0 0}
+.detail-actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:15px}
+.detail-actions .btn{flex:1;min-width:180px}
+.btn.secondary{background:var(--navy);color:#fff}
+.btn.outline{background:transparent;color:var(--text);border:1px solid var(--line)}
+.seller-note{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;margin-top:22px}
+.seller-note h3{margin:0 0 8px;font:400 25px/1.25 var(--disp)}
+.seller-note p{white-space:pre-line;margin:0;color:var(--text)}
+.seller-note .byline{display:block;margin-top:10px;color:var(--muted);font-size:13px}
+.detail-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.detail-meta span{border:1px solid var(--line);border-radius:999px;padding:3px 11px;font-size:13px;color:var(--muted)}
+.report-link{border:0;background:transparent;color:var(--muted);text-decoration:underline;cursor:pointer;font:inherit;font-size:14px}
+.report-dialog{max-width:min(94vw,520px)}
+.report-dialog label{display:block;margin:12px 0 6px;font-weight:600}
+.report-dialog select,.report-dialog textarea{width:100%;border:1px solid var(--line);border-radius:9px;padding:10px;background:var(--bg);color:var(--text);font:inherit}
+.report-dialog textarea{min-height:90px;resize:vertical}
+.dialog-actions{display:flex;gap:9px;margin-top:14px}
+.gallery-main{cursor:zoom-in}
+.image-dialog{max-width:min(96vw,1100px);width:96vw;padding:12px;background:#061232;border-radius:14px;position:relative}
+.image-dialog::backdrop{background:rgba(3,9,24,.88)}
+.image-dialog img{display:block;max-width:100%;max-height:82vh;width:auto;height:auto;margin:auto;object-fit:contain}
+.image-dialog-close{position:absolute;top:8px;inset-inline-end:8px;z-index:2;width:40px;height:40px;border:0;border-radius:50%;background:#fff;color:#061232;font-size:28px;cursor:pointer}
+.toast{position:fixed;bottom:24px;inset-inline:20px;margin:auto;width:fit-content;max-width:min(90vw,520px);z-index:30;background:var(--deep);color:#fff;padding:11px 17px;border-radius:10px;box-shadow:0 8px 25px rgba(0,0,0,.2);opacity:0;pointer-events:none;transform:translateY(10px);transition:.2s}
+.toast.show{opacity:1;transform:translateY(0)}
+.disabled-contact{display:block;text-align:center;font-size:13px;color:var(--muted);margin-top:7px}
+.price-line{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.price-line .price{margin:0}
+.price-old{font-size:12px;color:var(--muted)}
+.card .info h3{line-height:1.3}
+.favorites-header{background:var(--navy);color:#fff}
+.favorites-header nav{padding:16px 0}
+.favorites-header nav ul a{color:var(--steel)}
+.favorites-header nav ul a:hover{color:#fff}
+.favorites-title{font:400 clamp(38px,7vw,58px)/1.1 var(--disp);margin:0 0 6px}
+.favorites-section{min-height:60vh}
+@media(max-width:700px){
+ nav{flex-wrap:wrap}nav ul{display:none}.nav-fav{font-size:14px}
+ .section-head{align-items:start}
+ .body-types{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .gallery-thumbs{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+ .detail-actions .btn{min-width:100%}
+ .filters-panel input[type=number],.filters-panel select{flex:1;min-width:calc(50% - 8px)}
+}
+
+</style>
+</head>
+<body>
+<div id="home">
+<header class="hero">
+ <div class="wrap">
+  <nav>
+   <a class="logo" href="#" aria-label="دوّر">
+    <svg width="34" height="34" viewBox="0 0 34 34" fill="none" stroke="#FFB429" stroke-width="4" stroke-linecap="round" aria-hidden="true"><circle cx="15" cy="15" r="10"/><path d="M23 23l8 8"/></svg>
+    <span><b>دوّر</b><small>DAWWAR</small></span>
+   </a>
+   <ul><li><a href="#gallery">المعرض</a></li><li><a href="#browse-types">حسب النوع</a></li><li><a href="#how">ازاي بتشتغل</a></li><li><a href="#sellers">للبائعين</a></li></ul>
+   <div style="display:flex;align-items:center;gap:12px">
+    <a class="nav-fav" href="#favorites" aria-label="المفضلة">♡ المفضلة <span class="fav-count" id="fav-count">0</span></a>
+    <a class="btn" href="#sellers">اعرض عربيتك</a>
+   </div>
+  </nav>
+  <h1>بتدوّر على عربية في حدود كام؟</h1>
+  <p class="lead">اختار ميزانيتك، اتفرج على العربيات وقارن براحتك. ولما تلاقي اللي يناسبك، كلّم صاحبها مباشرة.</p>
+  <div class="plates" id="plates"></div>
+ </div>
+</header>
+
+<main>
+<section id="featured-section" class="featured-section">
+ <div class="wrap">
+  <div class="section-head"><div><h2>سيارات مميزة</h2><p class="sub">عربيات أصحابها اختاروا ظهور إضافي على دوّر.</p></div></div>
+  <div class="grid" id="featured-grid"></div>
+ </div>
+</section>
+
+<section id="browse-types" style="padding-top:24px">
+ <div class="wrap">
+  <h2>بتدور على نوع عربية معين؟</h2><p class="sub">اختار النوع، وبعدها شوف الماركات والموديلات المتاحة عندنا.</p>
+  <div class="body-types" id="body-types"></div>
+  <div class="models-panel" id="models-panel" hidden><h3 id="models-title">الموديلات المتاحة</h3><div class="model-chips" id="model-chips"></div></div>
+ </div>
+</section>
+
+<section id="gallery"><div class="wrap">
+ <h2 id="gt">كل العربيات</h2>
+ <p class="sub" id="gs">اختار ميزانيتك أو النوع أو استخدم البحث عشان توصل للعربية المناسبة.</p>
+ <div class="filters-panel">
+  <div class="filters" id="filters">
+   <input type="search" id="search" placeholder="دوّر بالماركة أو الموديل..." aria-label="ابحث عن سيارة">
+   <select id="brand-filter" aria-label="الماركة"><option value="">كل الماركات</option></select>
+   <select id="model-filter" aria-label="الموديل"><option value="">كل الموديلات</option></select>
+   <select id="governorate-filter" aria-label="المحافظة"><option value="">كل المحافظات</option></select>
+   <select id="city-filter" aria-label="المدينة أو المركز"><option value="">كل المدن والمراكز</option></select>
+   <select id="body-filter" aria-label="نوع العربية"><option value="">كل أنواع العربيات</option></select>
+   <select id="transmission-filter" aria-label="ناقل الحركة"><option value="">كل أنواع الفتيس</option><option>أوتوماتيك</option><option>يدوي</option></select>
+   <select id="fuel-filter" aria-label="نوع الوقود"><option value="">كل أنواع الوقود</option></select>
+   <input type="number" id="min-price" min="0" placeholder="أقل سعر" aria-label="أقل سعر">
+   <input type="number" id="max-price" min="0" placeholder="أعلى سعر" aria-label="أعلى سعر">
+   <input type="number" id="min-year" min="1980" max="2035" placeholder="من سنة" aria-label="من سنة الصنع">
+   <input type="number" id="max-year" min="1980" max="2035" placeholder="إلى سنة" aria-label="إلى سنة الصنع">
+   <input type="number" id="max-km" min="0" placeholder="أقصى كم" aria-label="أقصى عدد كيلومترات">
+   <select id="status-filter" aria-label="حالة الإعلان"><option value="">كل الحالات</option><option value="available">متاحة</option><option value="reserved">محجوزة</option><option value="sold">مباعة</option></select>
+   <select id="sort-filter" aria-label="ترتيب النتائج"><option value="newest">الأحدث أولًا</option><option value="price-low">السعر الأقل</option><option value="price-high">السعر الأعلى</option><option value="year-high">أحدث موديل</option><option value="km-low">أقل كيلومترات</option></select>
+   <button class="clear-filters" id="reset-filters" type="button">مسح الفلاتر</button>
+  </div>
+ </div>
+ <div class="chips lt" id="types" role="group" aria-label="نوع العربية"></div>
+ <p id="count" aria-live="polite"></p>
+ <div class="grid" id="grid"></div>
+</div></section>
+
+<section id="how" style="padding-top:0"><div class="wrap">
+ <h2>ازاي بتشتغل</h2><p class="sub">تلات خطوات للمشتري.</p>
+ <div class="steps">
+  <div class="step"><b>1. حدد ميزانيتك</b><p>اختار الفئة أو استخدم البحث والفلاتر عشان تشوف العربيات اللي تناسبك.</p></div>
+  <div class="step"><b>2. اتفرج وقارن</b><p>شوف صور كل عربية وتفاصيلها، واختار لحد تلات عربيات للمقارنة.</p></div>
+  <div class="step"><b>3. كلّم صاحبها</b><p>تواصل مباشرة مع صاحب العربية على واتساب واسأله عن التفاصيل والمعاينة.</p></div>
+ </div>
+</div></section>
+
+<section id="buyer-clarity"><div class="wrap">
+ <h2>قبل ما تاخد قرار الشراء</h2><p class="sub">معلومات مهمة عن دور دوّر وإيه اللي ننصحك تتأكد منه قبل المعاينة وإتمام البيع.</p>
+ <div class="trust">
+  <div><h3>مراجعة بيانات الإعلان</h3><p>بنراجع بيانات العربية وصورها مع صاحب الإعلان قبل النشر، علشان تفاصيل الإعلان تكون واضحة ومنظمة. المراجعة دي مش بديل عن الفحص الفني.</p></div>
+  <div><h3>الفحص الفني مسؤوليتك</h3><p>لو مفيش تقرير فحص مستقل مرفق بالإعلان، عاين العربية بنفسك واستعن بفني متخصص أو مركز فحص موثوق قبل اتخاذ قرار الشراء.</p></div>
+  <div><h3>التواصل وإتمام البيع</h3><p>التواصل والاتفاق والسداد بيكونوا مباشرة بينك وبين البائع. دوّر مش طرف في استلام ثمن العربية أو تحويل الفلوس بين الطرفين.</p></div>
+ </div>
+</div></section>
+
+<section class="sell" id="sellers"><div class="wrap">
+ <h2>عندك عربية للبيع؟</h2>
+ <p class="sub">بنجهز إعلانك ونعرضه ونسوّقه. رسوم خدمة ثابتة، ومفيش عمولة على سعر البيع.</p>
+ <div class="pk">
+  <div class="pkg"><h3>عادي</h3><ul><li>صفحة خاصة بالعربية في المعرض</li><li>عرض الصور والمواصفات والوصف</li><li>ظهور في نتائج البحث والفلاتر</li><li>زر تواصل مباشر مع صاحب العربية</li></ul><a class="btn ghost" href="#" data-admin-wa="عايز أعرض عربيتي على دوّر (إعلان عادي)">اعرض عربيتك</a></div>
+  <div class="pkg hot"><h3>مميز</h3><ul><li>كل مميزات الإعلان العادي</li><li>ظهور في قسم السيارات المميزة</li><li>أولوية ظهور داخل الفئة المناسبة</li><li>إمكانية تجهيز فيديو ونشره على تيك توك حسب الاتفاق</li></ul><a class="btn" href="#" data-admin-wa="عايز أعرض عربيتي على دوّر (إعلان مميز)">خلّي إعلانك مميز</a></div>
+ </div>
+ <p class="note">رسوم الخدمة ومدتها بتتحدد قبل النشر. الإعلان المميز ترويجي ومدفوع، ومش معناه إن العربية مفحوصة أو مضمونة. الخدمة بمقابل سواء تمت الصفقة أو لا، ومش بنضمن البيع.</p>
+</div></section>
+
+
+</main>
+
+<footer><div class="wrap">
+ <a class="logo" href="#"><b>دوّر</b></a>
+ <p>دوّر. اختار. كلّم صاحبها.</p>
+ <p id="demo-disclaimer">السيارات والبيانات والصور في النسخة التجريبية أمثلة توضيحية وليست عروض بيع فعلية.</p>
+</div></footer>
+</div>
+
+<div id="favorites-page" hidden>
+ <header class="favorites-header">
+  <div class="wrap">
+   <nav>
+    <a class="logo" href="#" aria-label="دوّر">
+     <svg width="34" height="34" viewBox="0 0 34 34" fill="none" stroke="#FFB429" stroke-width="4" stroke-linecap="round" aria-hidden="true"><circle cx="15" cy="15" r="10"/><path d="M23 23l8 8"/></svg>
+     <span><b>دوّر</b><small>DAWWAR</small></span>
+    </a>
+    <ul><li><a href="#gallery">المعرض</a></li><li><a href="#browse-types">حسب النوع</a></li></ul>
+    <a class="btn" href="#gallery">العودة للمعرض</a>
+   </nav>
+  </div>
+ </header>
+ <main>
+  <section class="favorites-section">
+   <div class="wrap">
+    <div class="section-head"><div><h1 class="favorites-title">المفضلة</h1><p class="sub">كل العربيات اللي حفظتها في مكان واحد.</p></div><button class="clear-filters" id="clear-favorites" type="button">مسح المفضلة</button></div>
+    <div class="grid" id="favorites-grid"></div>
+   </div>
+  </section>
+ </main>
+ <footer><div class="wrap"><a class="logo" href="#"><b>دوّر</b></a><p>دوّر. اختار. كلّم صاحبها.</p></div></footer>
+</div>
+
+<div id="detail" hidden></div>
+
+<div id="bar"><span id="bt"></span><button class="btn" id="go" type="button">قارن دلوقتي</button></div>
+<dialog id="dlg"><div class="tw" id="tbl"></div><p><button class="btn" id="x" type="button">قفل</button></p></dialog>
+<dialog id="report-dialog" class="report-dialog">
+ <form id="report-form">
+  <h2 style="font-size:28px">الإبلاغ عن الإعلان</h2>
+  <p class="sub">اختار سبب البلاغ، واكتب أي تفاصيل تساعدنا نراجع الإعلان.</p>
+  <label for="report-reason">سبب البلاغ</label>
+  <select id="report-reason" required><option value="">اختار السبب</option><option>بيانات غير صحيحة</option><option>إعلان مكرر</option><option>السعر أو الصور مضللة</option><option>العربية اتباعت بالفعل</option><option>سبب آخر</option></select>
+  <label for="report-notes">تفاصيل إضافية (اختياري)</label>
+  <textarea id="report-notes" placeholder="اكتب تفاصيل البلاغ..."></textarea>
+  <div class="dialog-actions"><button class="btn" type="submit">إرسال البلاغ</button><button class="clear-filters" type="button" id="close-report">إلغاء</button></div>
+ </form>
+</dialog>
+<dialog id="image-dialog" class="image-dialog"><button type="button" class="image-dialog-close" id="close-image" aria-label="إغلاق الصورة">×</button><img id="zoom-image" alt="صورة السيارة بحجم كبير"></dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* إعدادات الاتصال: ضع رقم إدارة دوّر بصيغة دولية، ورابط Google Apps Script عند تجهيز الشيت. */
+var CONFIG = {
+  ADMIN_WA: '',
+  GOOGLE_SHEETS_API_URL: 'https://script.google.com/macros/s/AKfycbz884NPupm8C7P1Z_r6wWOScmN1PsjwCJmlx_9IHXSH4KShkQNM5ZDv-eJm-8GSNu5p/exec'
+};
+
+var INTERIOR_PHOTOS = [
+ 'https://images.pexels.com/photos/25857415/pexels-photo-25857415.jpeg?auto=compress&cs=tinysrgb&w=1200',
+ 'https://images.pexels.com/photos/27524732/pexels-photo-27524732.jpeg?auto=compress&cs=tinysrgb&w=1200',
+ 'https://images.pexels.com/photos/6988869/pexels-photo-6988869.jpeg?auto=compress&cs=tinysrgb&w=1200'
+];
+var WHEEL_PHOTO = 'https://images.pexels.com/photos/41081802/pexels-photo-41081802.jpeg?auto=compress&cs=tinysrgb&w=1200';
+
+/* بيانات عرض تجريبية فقط. أرقام واتساب البائعين متروكة فارغة عمدًا. */
+var CARS = [
+ {id:'DW-1001',brand:'شيفروليه',model:'لانوس',n:'شيفروليه لانوس',y:2012,km:165000,p:215000,priceNegotiable:true,g:'الدقهلية',city:'المنصورة',s:'فرد',t:'سيدان',st:0,status:'available',c:'#5B6E99',e:'١٫٥ لتر',tr:'يدوي',fuel:'بنزين',col:'فضي',cd:'جيدة',ft:'تكييف، راديو، فتحة تهوية',sellerWhatsApp:'',sellerDescription:'العربية معايا من فترة، حالتها كويسة بالنسبة لموديلها، والتكييف شغال. المعاينة في المنصورة، واللي جاد يكلمني ونحدد معاد.',img:'https://upload.wikimedia.org/wikipedia/commons/0/05/Daewoo_Lanos.jpg',featured:false,reviewed:false,createdAt:'2026-11-22',updatedAt:'2026-11-24'},
+ {id:'DW-1002',brand:'هيونداي',model:'أتوس',n:'هيونداي أتوس',y:2014,km:140000,p:240000,priceNegotiable:true,g:'القاهرة',city:'مدينة نصر',s:'فرد',t:'هاتشباك',st:0,status:'available',c:'#A0622D',e:'١٫١ لتر',tr:'يدوي',fuel:'بنزين',col:'أحمر',cd:'جيدة جدًا',ft:'اقتصادية، تكييف، سهلة في الركنة',sellerWhatsApp:'',sellerDescription:'عربية صغيرة وعملية في المشاوير والزحمة، واستهلاكها مناسب. فيها تكييف، والمعاينة بعد الاتفاق.',img:'https://upload.wikimedia.org/wikipedia/commons/7/73/Hyundai_Atos.JPG',featured:true,featuredUntil:'2027-01-01',reviewed:false,createdAt:'2026-11-23',updatedAt:'2026-11-24'},
+ {id:'DW-1003',brand:'فيات',model:'تيبو',n:'فيات تيبو',y:2018,km:98000,p:420000,priceNegotiable:false,g:'الجيزة',city:'6 أكتوبر',s:'معرض',t:'سيدان',st:0,status:'available',c:'#2F6B6B',e:'١٫٦ لتر',tr:'أوتوماتيك',fuel:'بنزين',col:'أبيض',cd:'ممتازة',ft:'حساسات ركن، شاشة، كاميرا',sellerWhatsApp:'',sellerDescription:'تيبو أوتوماتيك، فيها شاشة وكاميرا وحساسات ركن. تفاصيل الحالة والمعاينة متاحة من خلال التواصل.',img:'https://upload.wikimedia.org/wikipedia/commons/e/e6/Fiat_Tipo_Sedan_F.jpg',featured:true,featuredUntil:'2027-01-01',reviewed:false,createdAt:'2026-11-24',updatedAt:'2026-11-24'},
+ {id:'DW-1004',brand:'هيونداي',model:'i10',n:'هيونداي i10',y:2019,km:62000,p:480000,priceNegotiable:true,g:'الإسكندرية',city:'سيدي جابر',s:'فرد',t:'هاتشباك',st:0,status:'available',c:'#3D5A99',e:'١٫٢ لتر',tr:'أوتوماتيك',fuel:'بنزين',col:'أزرق',cd:'ممتازة',ft:'شاشة، بلوتوث، اقتصادية',sellerWhatsApp:'',sellerDescription:'العربية استخدام يومي، أوتوماتيك، فيها بلوتوث وشاشة. المعاينة في إسكندرية، وأي استفسار أنا موجود.',img:'https://upload.wikimedia.org/wikipedia/commons/9/92/Hyundai-i10.jpg',featured:false,reviewed:false,createdAt:'2026-11-21',updatedAt:'2026-11-24'},
+ {id:'DW-1005',brand:'نيسان',model:'صني',n:'نيسان صني',y:2019,km:84000,p:560000,priceNegotiable:true,g:'الإسكندرية',city:'العصافرة',s:'فرد',t:'سيدان',st:1,status:'reserved',c:'#7A4F5E',e:'١٫٦ لتر',tr:'أوتوماتيك',fuel:'بنزين',col:'رمادي',cd:'جيدة جدًا',ft:'تكييف، مثبت سرعة',sellerWhatsApp:'',sellerDescription:'الصني أوتوماتيك، حالتها كويسة حسب الاستخدام، والتكييف شغال. الإعلان محجوز حاليًا لحين تأكيد حالة البيع.',img:'https://images.pexels.com/photos/18465730/pexels-photo-18465730/free-photo-of-white-nissan-sunny-with-open-hood.jpeg?auto=compress&dpr=1&h=750&w=1260',featured:false,reviewed:false,createdAt:'2026-11-20',updatedAt:'2026-11-24'},
+ {id:'DW-1006',brand:'كيا',model:'بيكانتو',n:'كيا بيكانتو',y:2020,km:52000,p:640000,priceNegotiable:false,g:'القاهرة',city:'التجمع',s:'معرض',t:'هاتشباك',st:0,status:'available',c:'#C0502F',e:'١٫٢ لتر',tr:'أوتوماتيك',fuel:'بنزين',col:'برتقالي',cd:'ممتازة',ft:'شاشة، كاميرا، اقتصادية',sellerWhatsApp:'',sellerDescription:'بيكانتو أوتوماتيك، مناسبة للمدينة وسهلة في الركنة. فيها شاشة وكاميرا، تقدر تتواصل للاستفسار عن باقي التفاصيل.',img:'https://images.pexels.com/photos/20475153/pexels-photo-20475153/free-photo-of-white-kia-picanto.jpeg?auto=compress&dpr=1&h=750&w=1260',featured:true,featuredUntil:'2027-01-01',reviewed:false,createdAt:'2026-11-24',updatedAt:'2026-11-24'},
+ {id:'DW-1007',brand:'فولكس فاجن',model:'جولف',n:'فولكس فاجن جولف',y:2017,km:88000,p:880000,priceNegotiable:true,g:'الجيزة',city:'الشيخ زايد',s:'فرد',t:'هاتشباك',st:0,status:'available',c:'#4A4F63',e:'١٫٤ لتر تيربو',tr:'أوتوماتيك',fuel:'بنزين',col:'رمادي غامق',cd:'ممتازة',ft:'تيربو، شاشة، جلد',sellerWhatsApp:'',sellerDescription:'جولف تيربو، أوتوماتيك، فيها شاشة وفرش جلد. اللي محتاج تفاصيل أكتر أو حابب يعاين يتواصل.',img:'https://images.pexels.com/photos/20429096/pexels-photo-20429096/free-photo-of-volkswagen-golf-car-parked-on-the-side-of-the-road-with-hills.jpeg?auto=compress&dpr=1&h=750&w=1260',featured:false,reviewed:false,createdAt:'2026-11-19',updatedAt:'2026-11-24'},
+ {id:'DW-1008',brand:'هيونداي',model:'إلنترا',n:'هيونداي إلنترا',y:2021,km:61000,p:980000,priceNegotiable:true,g:'القاهرة',city:'المعادي',s:'فرد',t:'سيدان',st:0,status:'available',c:'#2E4F8F',e:'١٫٦ لتر',tr:'أوتوماتيك',fuel:'بنزين',col:'أسود',cd:'ممتازة',ft:'فتحة سقف، كاميرا، شاشة',sellerWhatsApp:'',sellerDescription:'إلنترا أوتوماتيك، فيها فتحة سقف وكاميرا وشاشة. العربية متاحة للمعاينة بعد التواصل وتحديد ميعاد.',img:'https://images.pexels.com/photos/12206292/pexels-photo-12206292.jpeg?auto=compress&dpr=1&h=750&w=1260',featured:false,reviewed:false,createdAt:'2026-11-23',updatedAt:'2026-11-24'},
+ {id:'DW-1009',brand:'ميني',model:'كوبر',n:'ميني كوبر',y:2016,km:90000,p:1150000,priceNegotiable:false,g:'القاهرة',city:'الزمالك',s:'معرض',t:'كوبيه',st:0,status:'available',c:'#8A2E3B',e:'١٫٥ لتر تيربو',tr:'أوتوماتيك',fuel:'بنزين',col:'أحمر',cd:'ممتازة',ft:'سقف بانوراما، جلد، شاشة',sellerWhatsApp:'',sellerDescription:'ميني كوبر، شكلها مميز وسقف بانوراما وفرش جلد. اسألنا عن التفاصيل والمعاينة.',img:'https://images.pexels.com/photos/18180565/pexels-photo-18180565/free-photo-of-mini-cooper-parked-by-lake.jpeg?auto=compress&dpr=1&h=750&w=1260',featured:false,reviewed:false,createdAt:'2026-11-18',updatedAt:'2026-11-24'},
+ {id:'DW-1010',brand:'تويوتا',model:'كورولا',n:'تويوتا كورولا',y:2020,km:70000,p:1250000,priceNegotiable:true,g:'الجيزة',city:'الدقي',s:'معرض',t:'سيدان',st:0,status:'available',c:'#5C6B7A',e:'١٫٦ لتر',tr:'أوتوماتيك',fuel:'بنزين',col:'فضي',cd:'ممتازة',ft:'مثبت سرعة، كاميرا، وسادات هوائية',sellerWhatsApp:'',sellerDescription:'كورولا أوتوماتيك، فيها مثبت سرعة وكاميرا. المعاينة متاحة بعد التنسيق مع المعرض.',img:'https://images.pexels.com/photos/24827275/pexels-photo-24827275/free-photo-of-toyota-corolla-on-a-gravel-road-among-the-arid-mountains.jpeg?auto=compress&dpr=1&h=750&w=1260',featured:false,reviewed:false,createdAt:'2026-11-17',updatedAt:'2026-11-24'},
+ {id:'DW-1011',brand:'كيا',model:'سبورتاج',n:'كيا سبورتاج',y:2022,km:45000,p:1850000,priceNegotiable:false,g:'الشرقية',city:'الزقازيق',s:'فرد',t:'SUV',st:1,status:'reserved',c:'#2D6A4F',e:'١٫٦ لتر',tr:'أوتوماتيك',fuel:'بنزين',col:'أخضر غامق',cd:'ممتازة',ft:'فتحة سقف، كاميرا ٣٦٠، جلد',sellerWhatsApp:'',sellerDescription:'سبورتاج موديل حديث، أوتوماتيك، وفيها فتحة سقف وكاميرا ٣٦٠. الإعلان محجوز حاليًا.',img:'https://images.pexels.com/photos/27284257/pexels-photo-27284257/free-photo-of-kia-sportage.jpeg?auto=compress&dpr=1&h=750&w=1260',featured:false,reviewed:false,createdAt:'2026-11-16',updatedAt:'2026-11-24'},
+ {id:'DW-1012',brand:'نيسان',model:'قشقاي',n:'نيسان قشقاي',y:2023,km:28000,p:2300000,priceNegotiable:true,g:'القاهرة',city:'التجمع',s:'معرض',t:'SUV',st:0,status:'available',c:'#6B3FA0',e:'١٫٣ لتر تيربو',tr:'أوتوماتيك',fuel:'بنزين',col:'بنفسجي غامق',cd:'ممتازة',ft:'سقف بانوراما، شاشة كبيرة، حساسات',sellerWhatsApp:'',sellerDescription:'قشقاي تيربو أوتوماتيك، سقف بانوراما وشاشة كبيرة وحساسات. تواصل للاستفسار عن باقي التفاصيل.',img:'https://images.pexels.com/photos/16120530/pexels-photo-16120530/free-photo-of-nissan-qashqai-on-the-cobblestone-road-in-minsk.jpeg?auto=compress&dpr=1&h=750&w=1260',featured:false,reviewed:false,createdAt:'2026-11-15',updatedAt:'2026-11-24'}
+];
+
+/* All bundled listings are fictional demo records. Live Google Sheets records are marked demo:false. */
+CARS.forEach(function(car){car.demo=true;});
+
+var BUDGETS = [
+ {id:'b1',l:'تحت ٢٠٠',u:'ألف جنيه',lo:0,hi:200000},
+ {id:'b2',l:'٢٠٠ – ٣٥٠',u:'ألف جنيه',lo:200000,hi:350000},
+ {id:'b3',l:'٣٥٠ – ٥٠٠',u:'ألف جنيه',lo:350000,hi:500000},
+ {id:'b4',l:'٥٠٠ – ٧٥٠',u:'ألف جنيه',lo:500000,hi:750000},
+ {id:'b5',l:'٧٥٠ – ١٠٠٠',u:'ألف جنيه',lo:750000,hi:1000000},
+ {id:'b6',l:'فوق مليون',u:'جنيه',lo:1000000,hi:1e12}
+];
+var BODY_TYPES = [
+ {name:'سيدان',desc:'عائلية وعملية'}, {name:'SUV',desc:'مرتفعة وواسعة'},
+ {name:'هاتشباك',desc:'مناسبة للمدينة'}, {name:'كروس أوفر',desc:'عملية ومتعددة الاستخدام'},
+ {name:'كوبيه',desc:'طابع رياضي'}, {name:'بيك أب',desc:'حمولة واستخدامات متعددة'},
+ {name:'عائلية / MPV',desc:'مساحة أكبر للعيلة'}
+];
+var S = {cat:null,t:'الكل',pick:[],bodyType:null,brand:null,model:null,favorites:[],activeCar:null,activeImage:0,reportCar:null,city:'',fuel:'',status:'',bodyFilter:'',minYear:null,maxYear:null,maxKm:null};
+var FAV_KEY = 'dawwer:favorites:v1';
+var f = function(n){return Number(n||0).toLocaleString('ar-EG')};
+var Y = function(n){return String(n==null?'':n).replace(/\d/g,function(d){return '٠١٢٣٤٥٦٧٨٩'[d]})};
+var $ = function(i){return document.getElementById(i)};
+var escapeHTML = function(v){return String(v==null?'':v).replace(/[&<>"']/g,function(ch){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]})};
+var MAIN_IMAGE_FALLBACK = 'https://images.pexels.com/photos/35865313/pexels-photo-35865313.jpeg?auto=compress&cs=tinysrgb&w=1200';
+
+function safeImageUrl(value){var url=String(value||'').trim();return /^https:\/\//i.test(url)?url:'';}
+function imagesFor(c){
+ var arr = Array.isArray(c.images) ? c.images.map(safeImageUrl).filter(Boolean) : [];
+ if(!arr.length && c.img && safeImageUrl(c.img)) arr.push(safeImageUrl(c.img));
+ if(!arr.length) arr.push(MAIN_IMAGE_FALLBACK);
+ if(arr.length===1 && c.demo){
+  var seed = Math.abs(String(c.id||'').split('').reduce(function(a,ch){return a+ch.charCodeAt(0)},0));
+  arr.push(INTERIOR_PHOTOS[seed%INTERIOR_PHOTOS.length]);
+  arr.push(INTERIOR_PHOTOS[(seed+1)%INTERIOR_PHOTOS.length]);
+  arr.push(INTERIOR_PHOTOS[(seed+2)%INTERIOR_PHOTOS.length]);
+  arr.push(WHEEL_PHOTO);
+ }
+ return arr;
+}
+function isFeatured(c){return !!c.featured && (!c.featuredUntil || new Date(c.featuredUntil+'T23:59:59') >= new Date()) && c.status==='available';}
+function statusLabel(c){return c.status==='sold'?'مباعة':c.status==='reserved'?'محجوزة':'متاحة';}
+function normalizePhone(raw){
+ var d=String(raw||'').replace(/\D/g,'');
+ if(d.indexOf('00')===0)d=d.slice(2);
+ if(d.indexOf('0')===0)d='20'+d.slice(1);
+ else if(d.length===10 && d.indexOf('20')!==0)d='20'+d;
+ return /^20\d{10}$/.test(d)?d:'';
+}
+function sellerLink(c){
+ var phone=normalizePhone(c.sellerWhatsApp);
+ if(!phone)return '';
+ var msg='مساء الخير، مهتم بالعربية '+(c.n||'')+' موديل '+(c.y||'')+'، كود الإعلان '+(c.id||'')+' على دوّر. ممكن أعرف تفاصيل أكتر؟';
+ return 'https://wa.me/'+phone+'?text='+encodeURIComponent(msg);
+}
+function activeCars(){return CARS.filter(function(c){return c.status!=='hidden'});}
+function browseableCars(){return activeCars().filter(function(c){return c.status!=='sold'});}
+function formatDate(value){if(!value)return 'غير محدد';var d=new Date(value);if(isNaN(d.getTime()))return escapeHTML(value);return new Intl.DateTimeFormat('ar-EG',{day:'numeric',month:'long',year:'numeric'}).format(d);}
+function cat(){return BUDGETS.filter(function(b){return b.id===S.cat})[0];}
+function inBudget(c){var b=cat();return !b||(Number(c.p)>=b.lo && Number(c.p)<b.hi);}
+function showToast(text){var el=$('toast');el.textContent=text;el.classList.add('show');clearTimeout(showToast.timer);showToast.timer=setTimeout(function(){el.classList.remove('show')},2800);}
+function readFavorites(){try{var v=JSON.parse(localStorage.getItem(FAV_KEY)||'[]');return Array.isArray(v)?v.filter(function(x){return typeof x==='string'}):[]}catch(e){return [];}}
+function saveFavorites(){try{localStorage.setItem(FAV_KEY,JSON.stringify(S.favorites));}catch(e){showToast('المتصفح مش قادر يحفظ المفضلة حاليًا.');}}
+function favoriteButton(c){var active=S.favorites.indexOf(c.id)>-1;return '<button class="icon-btn '+(active?'active':'')+'" type="button" data-fav="'+escapeHTML(c.id)+'" aria-label="'+(active?'إزالة من المفضلة':'إضافة للمفضلة')+'" aria-pressed="'+active+'">'+(active?'♥':'♡')+'</button>';}
+function card(c,cmp){
+ var on=S.pick.indexOf(c.id)>-1,dis=!on&&S.pick.length>=3,u='#car-'+encodeURIComponent(c.id),img=imagesFor(c)[0]||MAIN_IMAGE_FALLBACK;
+ var tags='<div class="card-tags"><span class="tag '+(c.status==='sold'?'sold':c.status==='reserved'?'reserved': 'ok')+'">'+statusLabel(c)+'</span>'+(isFeatured(c)?'<span class="tag featured">مميز</span>':'')+'</div>';
+ return '<article class="card '+(c.status!=='available'?'res ':'')+(isFeatured(c)?'featured-card':'')+'"><a class="art" href="'+u+'" aria-label="تفاصيل '+escapeHTML(c.n)+'"><img src="'+escapeHTML(img)+'" alt="صورة توضيحية لـ '+escapeHTML(c.n)+'" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src=\''+MAIN_IMAGE_FALLBACK+'\'"></a>'+tags+'<div class="card-tools">'+favoriteButton(c)+'</div>'+
+ '<div class="info"><h3><a href="'+u+'">'+escapeHTML(c.n)+' '+Y(c.y)+'</a></h3><p class="meta">'+f(c.km)+' كم · '+escapeHTML(c.g)+' · '+escapeHTML(c.tr)+'</p><div class="price-line"><div class="price">'+f(c.p)+' ج.م</div>'+(c.priceNegotiable?'<span class="price-old">قابل للتفاوض</span>':'')+'</div>'+(c.updatedAt?'<span class="rev">آخر تحديث: '+formatDate(c.updatedAt)+'</span>':'')+(c.reviewed?'<span class="rev">✓ تمت مراجعة بيانات الإعلان</span>':'<span class="rev">كود الإعلان: '+escapeHTML(c.id)+'</span>')+
+ '<div class="acts"><a class="btn" href="'+u+'">التفاصيل</a>'+(cmp?'<label class="cmp"><input type="checkbox" data-compare="'+escapeHTML(c.id)+'"'+(on?' checked':'')+(dis?' disabled':'')+'> قارن</label>':'')+'</div></div></article>';
+}
+function renderBudget(){
+ $('plates').innerHTML=BUDGETS.map(function(b){return '<button class="plate" data-budget="'+b.id+'" aria-pressed="'+(S.cat===b.id)+'"><i>دوّر · مصر</i><b>'+b.l+'</b><small>'+b.u+'</small></button>'}).join('');
+}
+function renderFeatured(){
+ var list=CARS.filter(isFeatured).sort(function(a,b){return String(b.featuredUntil||'').localeCompare(String(a.featuredUntil||''));});
+ $('featured-grid').innerHTML=list.length?list.slice(0,6).map(function(c){return card(c,false)}).join(''):'<div class="empty">مفيش عربيات مميزة حاليًا. تابعنا عشان تشوف أحدث الإعلانات.</div>';
+ $('featured-section').hidden=!list.length;
+}
+function renderBodyTypes(){
+ var available=browseableCars();
+ $('body-types').innerHTML=BODY_TYPES.map(function(t){var count=available.filter(function(c){return c.t===t.name}).length;return count?'<button class="body-type" type="button" data-body-type="'+escapeHTML(t.name)+'" aria-pressed="'+(S.bodyType===t.name)+'"><strong>'+escapeHTML(t.name)+'</strong><small>'+escapeHTML(t.desc)+' · '+f(count)+' إعلانات</small></button>':''}).join('');
+ var panel=$('models-panel');
+ if(!S.bodyType){panel.hidden=true;return;}
+ panel.hidden=false;$('models-title').textContent='الماركات والموديلات المتاحة في '+S.bodyType;
+ var list=available.filter(function(c){return c.t===S.bodyType});
+ var pairs={};list.forEach(function(c){var key=c.brand+'|||'+c.model;pairs[key]=(pairs[key]||0)+1;});
+ var keys=Object.keys(pairs);
+ $('model-chips').innerHTML=keys.length?keys.map(function(k){var bits=k.split('|||');var active=S.brand===bits[0]&&S.model===bits[1];return '<button class="model-chip" type="button" data-model-brand="'+escapeHTML(bits[0])+'" data-model="'+escapeHTML(bits[1])+'" aria-pressed="'+active+'">'+escapeHTML(bits[0])+' '+escapeHTML(bits[1])+'<small>'+f(pairs[k])+'</small></button>';}).join(''):'<p class="rev">مفيش موديلات متاحة في النوع ده حاليًا.</p>';
+}
+function updateFilterOptions(){
+ var list=activeCars();
+ var brands=Array.from(new Set(list.map(function(c){return c.brand}).filter(Boolean))).sort();
+ var brandSelect=$('brand-filter'),modelSelect=$('model-filter'),govSelect=$('governorate-filter'),citySelect=$('city-filter'),bodySelect=$('body-filter'),fuelSelect=$('fuel-filter');
+ var oldBrand=S.brand||brandSelect.value,oldModel=S.model||modelSelect.value,oldGov=govSelect.value,oldCity=S.city||citySelect.value,oldBody=bodySelect.value,oldFuel=S.fuel||fuelSelect.value;
+ brandSelect.innerHTML='<option value="">كل الماركات</option>'+brands.map(function(v){return '<option value="'+escapeHTML(v)+'">'+escapeHTML(v)+'</option>'}).join('');
+ if(brands.indexOf(oldBrand)>-1)brandSelect.value=oldBrand;else S.brand=null;
+ var models=Array.from(new Set(list.filter(function(c){return !brandSelect.value||c.brand===brandSelect.value}).map(function(c){return c.model}).filter(Boolean))).sort();
+ modelSelect.innerHTML='<option value="">كل الموديلات</option>'+models.map(function(v){return '<option value="'+escapeHTML(v)+'">'+escapeHTML(v)+'</option>'}).join('');
+ if(models.indexOf(oldModel)>-1)modelSelect.value=oldModel;else S.model=null;
+ var govs=Array.from(new Set(list.map(function(c){return c.g}).filter(Boolean))).sort();
+ govSelect.innerHTML='<option value="">كل المحافظات</option>'+govs.map(function(v){return '<option value="'+escapeHTML(v)+'">'+escapeHTML(v)+'</option>'}).join('');
+ if(govs.indexOf(oldGov)>-1)govSelect.value=oldGov;
+ var cityRows=list.filter(function(c){return !govSelect.value||c.g===govSelect.value});
+ var cities=Array.from(new Set(cityRows.map(function(c){return c.city}).filter(Boolean))).sort();
+ citySelect.innerHTML='<option value="">كل المدن والمراكز</option>'+cities.map(function(v){return '<option value="'+escapeHTML(v)+'">'+escapeHTML(v)+'</option>'}).join('');
+ if(cities.indexOf(oldCity)>-1)citySelect.value=oldCity;else S.city='';
+ var bodies=Array.from(new Set(list.map(function(c){return c.t}).filter(Boolean))).sort();
+ bodySelect.innerHTML='<option value="">كل أنواع العربيات</option>'+bodies.map(function(v){return '<option value="'+escapeHTML(v)+'">'+escapeHTML(v)+'</option>'}).join('');
+ if(bodies.indexOf(oldBody)>-1)bodySelect.value=oldBody;
+ var fuels=Array.from(new Set(list.map(function(c){return c.fuel}).filter(Boolean))).sort();
+ fuelSelect.innerHTML='<option value="">كل أنواع الوقود</option>'+fuels.map(function(v){return '<option value="'+escapeHTML(v)+'">'+escapeHTML(v)+'</option>'}).join('');
+ if(fuels.indexOf(oldFuel)>-1)fuelSelect.value=oldFuel;else S.fuel='';
+}
+function readFilters(){
+ S.search=$('search').value.trim().toLowerCase();S.brand=$('brand-filter').value;S.model=$('model-filter').value;S.governorate=$('governorate-filter').value;S.city=$('city-filter').value;S.bodyFilter=$('body-filter').value;S.transmission=$('transmission-filter').value;S.fuel=$('fuel-filter').value;S.status=$('status-filter').value;S.minPrice=$('min-price').value?Number($('min-price').value):null;S.maxPrice=$('max-price').value?Number($('max-price').value):null;S.minYear=$('min-year').value?Number($('min-year').value):null;S.maxYear=$('max-year').value?Number($('max-year').value):null;S.maxKm=$('max-km').value?Number($('max-km').value):null;S.sort=$('sort-filter').value;
+}
+function getFilteredCars(){
+ readFilters();
+ var list=activeCars().filter(function(c){
+  var hay=[c.n,c.brand,c.model,c.g,c.city,c.t].join(' ').toLowerCase();
+  return inBudget(c)&&(!S.t||S.t==='الكل'||c.t===S.t)&&(!S.bodyType||c.t===S.bodyType)&&(!S.brand||c.brand===S.brand)&&(!S.model||c.model===S.model)&&(!S.governorate||c.g===S.governorate)&&(!S.city||c.city===S.city)&&(!S.bodyFilter||c.t===S.bodyFilter)&&(!S.transmission||c.tr===S.transmission)&&(!S.fuel||c.fuel===S.fuel)&&(!S.status||c.status===S.status)&&(!S.search||hay.indexOf(S.search)>-1)&&(S.minPrice===null||c.p>=S.minPrice)&&(S.maxPrice===null||c.p<=S.maxPrice)&&(S.minYear===null||c.y>=S.minYear)&&(S.maxYear===null||c.y<=S.maxYear)&&(S.maxKm===null||c.km<=S.maxKm);
+ });
+ if(S.sort==='price-low')list.sort(function(a,b){return a.p-b.p});
+ else if(S.sort==='price-high')list.sort(function(a,b){return b.p-a.p});
+ else if(S.sort==='year-high')list.sort(function(a,b){return b.y-a.y});
+ else if(S.sort==='km-low')list.sort(function(a,b){return a.km-b.km});
+ else list.sort(function(a,b){return String(b.createdAt||'').localeCompare(String(a.createdAt||''));});
+ return list;
+}
+function renderGallery(){
+ var list=getFilteredCars(),typeList=Array.from(new Set(activeCars().map(function(c){return c.t}).filter(Boolean)));
+ $('types').innerHTML='<button class="chip" data-list-type="" aria-pressed="'+(!S.t||S.t==='الكل')+'">كل الأنواع</button>'+typeList.map(function(t){return '<button class="chip" data-list-type="'+escapeHTML(t)+'" aria-pressed="'+(S.t===t)+'">'+escapeHTML(t)+'</button>'}).join('');
+ var hasFilters=S.cat||S.bodyType||S.brand||S.model||S.search||S.governorate||S.city||S.bodyFilter||S.transmission||S.fuel||S.status||S.minPrice!==null||S.maxPrice!==null||S.minYear!==null||S.maxYear!==null||S.maxKm!==null;
+ $('gt').textContent=hasFilters?'العربيات اللي تناسب بحثك':'كل العربيات';
+ $('gs').textContent=hasFilters?'تقدر تغيّر الفلاتر أو تمسحها عشان تشوف اختيارات أكتر.':'استخدم البحث والفلاتر عشان توصل للعربية اللي بتدور عليها.';
+ $('count').textContent=list.length?f(list.length)+' إعلان متاح للعرض':'مفيش نتائج مطابقة للبحث';
+ $('grid').innerHTML=list.length?list.map(function(c){return card(c,true)}).join(''):'<div class="empty"><b>ملقيناش عربيات بالمواصفات دي.</b><br>جرّب توسّع السعر أو تغيّر الماركة والمحافظة.</div>';
+ var n=S.pick.length;$('bar').className=n>=2?'on':'';$('bt').textContent='اخترت '+f(n)+' عربيات للمقارنة';
+}
+function renderFavorites(){
+ var list=S.favorites.map(function(id){return CARS.filter(function(c){return c.id===id&&c.status!=='hidden'})[0]}).filter(Boolean);
+ $('fav-count').textContent=f(list.length);
+ $('favorites-grid').innerHTML=list.length?list.map(function(c){return card(c,false)}).join(''):'<div class="empty"><b>لسه مفيش عربيات في المفضلة.</b><br>اضغط على علامة القلب في أي عربية عشان تحفظها وترجع لها بعدين من نفس الجهاز والمتصفح.</div>';
+}
+function renderAll(){renderBudget();renderFeatured();renderBodyTypes();updateFilterOptions();renderGallery();renderFavorites();}
+function imageGalleryMarkup(c){
+ var imgs=imagesFor(c),idx=Math.min(S.activeImage,imgs.length-1);
+ return '<div class="detail-gallery"><div class="gallery-main" data-zoom="1"><img id="gallery-main-img" src="'+escapeHTML(imgs[idx])+'" alt="صورة توضيحية '+escapeHTML(c.n)+'" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src=\''+MAIN_IMAGE_FALLBACK+'\'"><span class="tag '+(c.status==='sold'?'sold':c.status==='reserved'?'reserved':'ok')+'">'+statusLabel(c)+'</span><span class="gallery-count">'+Y(idx+1)+' / '+Y(imgs.length)+'</span></div><div class="gallery-thumbs">'+imgs.map(function(url,i){return '<button class="gallery-thumb '+(i===idx?'active':'')+'" type="button" data-thumb="'+i+'" aria-label="عرض الصورة '+Y(i+1)+'"><img src="'+escapeHTML(url)+'" alt="صورة مصغرة" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.opacity=.2"></button>'}).join('')+'</div><p class="gallery-disclaimer">'+(c.demo?'الصورة الخارجية للموديل، وباقي الصور استرشادية لتجربة المعرض وليست لنفس السيارة.':'الصور مرفقة مع الإعلان من صاحب العربية. راجع السيارة بنفسك أثناء المعاينة.')+'</p></div>';
+}
+function detail(c){
+ S.activeCar=c.id;
+ var rel=CARS.filter(function(x){return x.id!==c.id&&x.status!=='hidden'&&x.status!=='sold'}).map(function(x){var score=Math.abs(x.p-c.p)/Math.max(c.p,1);if(x.t===c.t)score-=0.22;if(x.brand===c.brand)score-=0.18;if(x.model===c.model)score-=0.28;return {car:x,score:score};}).sort(function(a,b){return a.score-b.score}).slice(0,3).map(function(x){return x.car});
+ var R=[['الماركة',c.brand],['الموديل',c.model],['السنة',Y(c.y)],['الكيلومترات',f(c.km)+' كم'],['ناقل الحركة',c.tr],['الوقود',c.fuel],['المحرك',c.e],['نوع العربية',c.t],['اللون',c.col],['السعر',f(c.p)+' جنيه'+(c.priceNegotiable?' — قابل للتفاوض':'')],['المحافظة',c.g],['المدينة / المركز',c.city||'غير محدد']];
+ var tb='<table class="spec">'+R.map(function(r){return '<tr><td>'+escapeHTML(r[0])+'</td><td>'+escapeHTML(r[1]||'غير محدد')+'</td></tr>'}).join('')+'</table>';
+ var wa=c.status==='sold'?'':sellerLink(c),fav=S.favorites.indexOf(c.id)>-1;
+ var contact=wa?'<a class="btn big" href="'+wa+'" target="_blank" rel="noopener">كلّم صاحب العربية على واتساب</a>':(c.status==='sold'?'<button class="btn big" type="button" disabled style="opacity:.6;cursor:not-allowed">العربية دي اتباعت</button>':'<button class="btn big" type="button" disabled style="opacity:.6;cursor:not-allowed">رقم صاحب العربية غير متاح في النسخة التجريبية</button><span class="disabled-contact">هنضيف رقم صاحب العربية مع بيانات الإعلان الحقيقي.</span>');
+ var desc=escapeHTML(c.sellerDescription||'صاحب الإعلان لم يضف وصفًا للعربية حتى الآن.').replace(/\n/g,'<br>');
+ var reviewed=c.reviewed?'<span class="rev">✓ تمت مراجعة بيانات الإعلان</span>':'<span class="rev">بيانات وصور توضيحية للنسخة التجريبية</span>';
+ $('detail').innerHTML='<div class="wrap"><a class="back" href="#gallery">← رجوع للمعرض</a><div class="dg">'+imageGalleryMarkup(c)+'<div><div class="section-head"><div><h2>'+escapeHTML(c.n)+' '+Y(c.y)+'</h2><div class="price">'+f(c.p)+' ج.م</div></div><button class="icon-btn '+(fav?'active':'')+'" type="button" data-fav="'+escapeHTML(c.id)+'" aria-label="إضافة للمفضلة" aria-pressed="'+fav+'">'+(fav?'♥':'♡')+'</button></div>'+reviewed+'<div class="detail-meta"><span>كود الإعلان: '+escapeHTML(c.id)+'</span><span>تاريخ النشر: '+formatDate(c.createdAt)+'</span>'+(c.updatedAt?'<span>آخر تحديث: '+formatDate(c.updatedAt)+'</span>':'')+(isFeatured(c)?'<span>إعلان مميز مدفوع</span>':'')+'</div><div class="fts">'+String(c.ft||'').split('،').filter(Boolean).map(function(x){return '<span>'+escapeHTML(x.trim())+'</span>'}).join('')+'</div>'+tb+'<div class="seller-note"><h3>نبذة عن السيارة</h3><p>'+desc+'</p><span class="byline">المعلومات الواردة في هذه النبذة مقدمة من المالك، ولا تُعد تقرير فحص فني مستقل.</span></div><div class="detail-actions">'+contact+'<button class="btn secondary" type="button" data-share="'+escapeHTML(c.id)+'">مشاركة الإعلان</button><button class="btn outline" type="button" data-report="'+escapeHTML(c.id)+'">الإبلاغ عن الإعلان</button></div><p class="rev">الصفقة بينك وبين البائع. اتأكد من حالة العربية ومستنداتها واستعن بفني متخصص قبل ما تدفع.</p></div></div>'+
+ (rel.length?'<h2 style="margin-top:46px">عربيات في نفس الحدود</h2><div class="grid">'+rel.map(function(x){return card(x,false)}).join('')+'</div>':'')+'</div>';
+}
+function route(){
+ var h=decodeURIComponent(location.hash.slice(1)),m=/^car-(DW-\d+)$/.exec(h),c=m&&CARS.filter(function(x){return x.id===m[1]&&x.status!=='hidden'})[0],isFavorites=h==='favorites';
+ $('home').hidden=!!c||isFavorites;$('favorites-page').hidden=!isFavorites;$('detail').hidden=!c;$('bar').style.display=(c||isFavorites)?'none':'';
+ if(c){S.activeImage=0;detail(c);window.scrollTo(0,0);document.title=c.n+' — دوّر';}
+ else if(isFavorites){S.activeCar=null;renderFavorites();window.scrollTo(0,0);document.title='المفضلة — دوّر';}
+ else{document.title='دوّر — معرض العربيات في مصر';var el=h&&$(h);if(el)el.scrollIntoView();}
+}
+function openAdminWhatsApp(message){var phone=normalizePhone(CONFIG.ADMIN_WA);if(!phone){showToast('رقم واتساب إدارة دوّر لسه مش متضاف في إعدادات الموقع.');return;}window.open('https://wa.me/'+phone+'?text='+encodeURIComponent(message),'_blank','noopener');}
+async function shareCar(id){var c=CARS.filter(function(x){return x.id===id})[0];if(!c)return;var url=location.href.split('#')[0]+'#car-'+encodeURIComponent(id);try{if(navigator.share){await navigator.share({title:c.n+' — دوّر',text:'شوف العربية دي على دوّر',url:url});}else if(navigator.clipboard&&navigator.clipboard.writeText){await navigator.clipboard.writeText(url);showToast('لينك الإعلان اتنسخ.');}else{window.prompt('انسخ رابط الإعلان:',url);}}catch(e){if(e&&e.name!=='AbortError')showToast('مش قادر أشارك الرابط دلوقتي.');}}
+function openReport(id){S.reportCar=CARS.filter(function(x){return x.id===id})[0];if(!S.reportCar)return;$('report-dialog').showModal();}
+function updateFiltersAndRender(){S.cat=null;renderGallery();}
+function resetFilters(){S.cat=null;S.t='الكل';S.bodyType=null;S.brand=null;S.model=null;S.search='';S.governorate='';S.city='';S.fuel='';S.status='';S.bodyFilter='';S.minPrice=null;S.maxPrice=null;S.minYear=null;S.maxYear=null;S.maxKm=null;S.sort='newest';['search','brand-filter','model-filter','governorate-filter','city-filter','body-filter','transmission-filter','fuel-filter','status-filter','min-price','max-price','min-year','max-year','max-km'].forEach(function(id){$(id).value='';});$('sort-filter').value='newest';renderBodyTypes();updateFilterOptions();$('body-filter').value='';renderGallery();}
+
+/* Events */
+document.addEventListener('click',function(e){
+ var t=e.target.closest('[data-budget],[data-list-type],[data-fav],[data-body-type],[data-model],[data-thumb],[data-admin-wa],[data-share],[data-report],[data-zoom]');
+ if(!t)return;
+ if(t.dataset.budget){S.cat=S.cat===t.dataset.budget?null:t.dataset.budget;renderGallery();$('gallery').scrollIntoView({behavior:'smooth'});}
+ else if(t.dataset.listType!==undefined){var selectedType=t.dataset.listType||'';S.t=selectedType||'الكل';S.bodyType=selectedType||null;S.bodyFilter=selectedType;S.brand=null;S.model=null;$('brand-filter').value='';$('model-filter').value='';updateFilterOptions();$('body-filter').value=selectedType;renderBodyTypes();renderGallery();}
+ else if(t.dataset.fav){var id=t.dataset.fav,idx=S.favorites.indexOf(id);if(idx>=0)S.favorites.splice(idx,1);else S.favorites.push(id);saveFavorites();renderAll();if(S.activeCar&&!$('detail').hidden){var active=CARS.filter(function(c){return c.id===S.activeCar})[0];if(active)detail(active);}showToast(idx>=0?'اتشالت من المفضلة.':'اتضافت للمفضلة.');}
+ else if(t.dataset.bodyType){var selectedType=S.bodyType===t.dataset.bodyType?'':t.dataset.bodyType;S.bodyType=selectedType||null;S.t=selectedType||'الكل';S.bodyFilter=selectedType;S.brand=null;S.model=null;$('brand-filter').value='';$('model-filter').value='';updateFilterOptions();$('body-filter').value=selectedType;renderBodyTypes();renderGallery();$('gallery').scrollIntoView({behavior:'smooth'});}
+ else if(t.dataset.model!==undefined){S.bodyType=S.bodyType||null;S.brand=t.dataset.modelBrand;S.model=t.dataset.model; $('brand-filter').value=S.brand;updateFilterOptions();$('brand-filter').value=S.brand;$('model-filter').value=S.model;renderGallery();$('gallery').scrollIntoView({behavior:'smooth'});}
+ else if(t.dataset.thumb!==undefined){S.activeImage=Number(t.dataset.thumb)||0;var c=CARS.filter(function(x){return x.id===S.activeCar})[0];if(c)detail(c);}
+ else if(t.dataset.zoom){var z=$('gallery-main-img');if(z&&z.src){$('zoom-image').src=z.src;$('image-dialog').showModal();}}
+ else if(t.dataset.adminWa){e.preventDefault();openAdminWhatsApp(t.dataset.adminWa);}
+ else if(t.dataset.share){shareCar(t.dataset.share);}
+ else if(t.dataset.report){openReport(t.dataset.report);}
+});
+
+document.addEventListener('change',function(e){
+ var id=e.target.dataset&&e.target.dataset.compare;if(id){var i=S.pick.indexOf(id);if(i>-1)S.pick.splice(i,1);else if(S.pick.length<3)S.pick.push(id);renderGallery();}
+ if(['brand-filter','model-filter','governorate-filter','city-filter','body-filter','transmission-filter','fuel-filter','status-filter','sort-filter'].indexOf(e.target.id)>-1){
+  if(e.target.id==='brand-filter'){S.brand=e.target.value;S.model=null;$('model-filter').value='';updateFilterOptions();}
+  else if(e.target.id==='model-filter')S.model=e.target.value;
+  else if(e.target.id==='governorate-filter'){S.governorate=e.target.value;S.city='';updateFilterOptions();}
+  else if(e.target.id==='city-filter')S.city=e.target.value;
+  else if(e.target.id==='body-filter'){S.bodyFilter=e.target.value;S.bodyType=e.target.value||null;S.t=e.target.value||'الكل';S.brand=null;S.model=null;$('brand-filter').value='';$('model-filter').value='';updateFilterOptions();$('body-filter').value=e.target.value;renderBodyTypes();}
+  else if(e.target.id==='transmission-filter')S.transmission=e.target.value;
+  else if(e.target.id==='fuel-filter')S.fuel=e.target.value;
+  else if(e.target.id==='status-filter')S.status=e.target.value;
+  else S.sort=e.target.value;
+  renderGallery();
+ }
+});
+['search','min-price','max-price','min-year','max-year','max-km'].forEach(function(id){$(id).addEventListener('input',function(){renderGallery();});});
+$('reset-filters').onclick=resetFilters;
+$('clear-favorites').onclick=function(){if(!S.favorites.length){showToast('المفضلة فاضية بالفعل.');return;}if(confirm('تمسح كل العربيات من المفضلة؟')){S.favorites=[];saveFavorites();renderAll();showToast('تم مسح المفضلة.');}};
+$('go').onclick=function(){
+ var P=S.pick.map(function(id){return CARS.filter(function(c){return c.id===id})[0]}).filter(Boolean);
+ if(P.length<2){showToast('اختار عربيتين على الأقل للمقارنة.');return;}
+ var rows=[['السعر',function(c){return f(c.p)+' ج.م'}],['السنة',function(c){return Y(c.y)}],['الكيلومترات',function(c){return f(c.km)+' كم'}],['الماركة',function(c){return c.brand}],['الموديل',function(c){return c.model}],['النوع',function(c){return c.t}],['ناقل الحركة',function(c){return c.tr}],['الوقود',function(c){return c.fuel}],['المحافظة',function(c){return c.g}],['السعر قابل للتفاوض',function(c){return c.priceNegotiable?'نعم':'لا'}],['الحالة',function(c){return statusLabel(c)}],['آخر تحديث',function(c){return c.updatedAt?formatDate(c.updatedAt):'غير محدد'}]];
+ var h='<table><thead><tr><th>المقارنة</th>'+P.map(function(c){return '<th>'+escapeHTML(c.n)+'</th>'}).join('')+'</tr></thead><tbody>';
+ rows.forEach(function(r){h+='<tr><td>'+r[0]+'</td>'+P.map(function(c){return '<td>'+escapeHTML(r[1](c))+'</td>'}).join('')+'</tr>';});
+ $('tbl').innerHTML=h+'</tbody></table>';$('dlg').showModal();
+};
+$('x').onclick=function(){$('dlg').close()};
+$('close-report').onclick=function(){$('report-dialog').close()};
+$('close-image').onclick=function(){$('image-dialog').close()};
+$('image-dialog').addEventListener('click',function(e){if(e.target===$('image-dialog'))$('image-dialog').close();});
+$('report-form').addEventListener('submit',function(e){e.preventDefault();if(!S.reportCar)return;var reason=$('report-reason').value,notes=$('report-notes').value.trim();var msg='بلاغ عن إعلان على دوّر\nكود الإعلان: '+S.reportCar.id+'\nالسيارة: '+S.reportCar.n+'\nالسبب: '+reason+'\nتفاصيل: '+(notes||'لا توجد تفاصيل إضافية');$('report-dialog').close();$('report-form').reset();openAdminWhatsApp(msg);});
+window.addEventListener('hashchange',route);
+window.addEventListener('storage',function(e){if(e.key===FAV_KEY){S.favorites=readFavorites();renderFavorites();renderGallery();}});
+
+/* Optional Google Sheets read-only JSON endpoint. Keep blank to use demo data. */
+function normalizeSheetCar(row){
+ var imgList=String(row.images||row.img||'').split(/[\n|;]/).map(function(x){return x.trim()}).filter(Boolean);
+ var brand=row.brand||row.make||'',model=row.model||'',name=row.name||row.n||[brand,model].filter(Boolean).join(' ');
+ var status=String(row.status||'available').toLowerCase();
+ return {id:String(row.id||''),brand:brand,model:model,n:name,y:Number(row.year||row.y||0),km:Number(row.mileage||row.km||0),p:Number(row.price||row.p||0),g:row.governorate||row.g||'',city:row.city||'',s:row.sellerType||row.s||'فرد',t:row.bodyType||row.t||'سيدان',status:String(status).toLowerCase(),st:String(status).toLowerCase()==='reserved'?1:0,c:row.colorCode||'#5B6E99',e:row.engine||row.e||'',tr:row.transmission||row.tr||'',fuel:row.fuelType||row.fuel||'',col:row.color||row.col||'',cd:row.condition||row.cd||'',ft:row.features||row.ft||'',sellerWhatsApp:row.sellerWhatsApp||'',sellerDescription:row.sellerDescription||'',images:imgList,demo:false,priceNegotiable:String(row.priceNegotiable||row.negotiable||'').toLowerCase()==='true',featured:String(row.isFeatured||row.featured||'').toLowerCase()==='true',featuredUntil:row.featuredUntil||'',reviewed:String(row.reviewed||'').toLowerCase()==='true',createdAt:row.createdAt||'',updatedAt:row.updatedAt||''};
+}
+function loadSheetJSONP(url){
+ return new Promise(function(resolve,reject){
+  var callbackName='__dawwerSheetsCallback';
+  var script=document.createElement('script');
+  var settled=false;
+  var timer=setTimeout(function(){finish(new Error('Google Sheets JSONP timeout'));},12000);
+  function cleanup(){clearTimeout(timer);script.remove();try{delete window[callbackName];}catch(e){window[callbackName]=undefined;}}
+  function finish(error,data){if(settled)return;settled=true;cleanup();if(error)reject(error);else resolve(data);}
+  window[callbackName]=function(data){finish(null,data);};
+  script.onerror=function(){finish(new Error('Google Sheets JSONP request failed'));};
+  var separator=url.indexOf('?')>=0?'&':'?';
+  script.src=url+separator+'callback='+encodeURIComponent(callbackName)+'&_='+Date.now();
+  document.head.appendChild(script);
+ });
+}
+async function loadSheetData(){
+ if(!CONFIG.GOOGLE_SHEETS_API_URL)return;
+ try{
+  var json;
+  try{
+   var res=await fetch(CONFIG.GOOGLE_SHEETS_API_URL,{cache:'no-store'});
+   if(!res.ok)throw new Error('HTTP '+res.status);
+   json=await res.json();
+  }catch(fetchError){
+   // Google Apps Script can be blocked by browser CORS on some deployments; JSONP is the fallback.
+   json=await loadSheetJSONP(CONFIG.GOOGLE_SHEETS_API_URL);
+  }
+  if(json&&json.error)throw new Error(json.error);
+  var rows=Array.isArray(json)?json:(json&& (json.cars||json.data))||[];
+  if(!Array.isArray(rows))throw new Error('Invalid data format');
+  var mapped=rows.map(normalizeSheetCar).filter(function(c){return c.id&&c.status!=='hidden'&&c.n&&c.images.length>0;});
+  CARS=mapped;$('demo-disclaimer').hidden=true;renderAll();if(location.hash.indexOf('#car-')===0)route();
+ }
+ catch(err){console.error('Google Sheets data load failed:',err);showToast('تعذر تحميل بيانات الشيت؛ بنعرض البيانات التجريبية حاليًا.');}
+}
+
+S.favorites=readFavorites();
+renderAll();route();
+loadSheetData();
+</script>
+</body>
+</html>
