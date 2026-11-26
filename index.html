@@ -447,7 +447,7 @@ function normalizePhone(raw){
 function sellerLink(c){
  var phone=normalizePhone(c.sellerWhatsApp);
  if(!phone)return '';
- var msg='مساء الخير، مهتم بالعربية '+(c.n||'')+' موديل '+(c.y||'')+'، كود الإعلان '+(c.id||'')+' على دوّر. ممكن أعرف تفاصيل أكتر؟';
+ var msg='السلام عليكم، مهتم بالعربية '+(c.n||'')+' موديل '+(c.y||'')+' المعروضة على دوّر. ممكن أعرف تفاصيل أكتر عنها؟';
  return 'https://wa.me/'+phone+'?text='+encodeURIComponent(msg);
 }
 function activeCars(){return CARS.filter(function(c){return c.status!=='hidden'});}
