@@ -509,14 +509,29 @@ function updateFilterOptions(){
  fuelSelect.innerHTML='<option value="">كل أنواع الوقود</option>'+fuels.map(function(v){return '<option value="'+escapeHTML(v)+'">'+escapeHTML(v)+'</option>'}).join('');
  if(fuels.indexOf(oldFuel)>-1)fuelSelect.value=oldFuel;else S.fuel='';
 }
+function normalizeSearchText(value){
+ return String(value||'').toLowerCase().replace(/[أإآ]/g,'ا').replace(/ى/g,'ي').replace(/ة/g,'ه').replace(/[ًٌٍَُِّْـ]/g,'').replace(/[.,؛;:()[\]{}\\/\\\\-]+/g,' ').replace(/\s+/g,' ').trim();
+}
+var SEARCH_TRANSLATIONS=[
+ [/تويوتا/g,'toyota'],[/هيونداي|هونداي/g,'hyundai'],[/كيا/g,'kia'],[/نيسان/g,'nissan'],[/شيفروليه/g,'chevrolet'],[/مرسيدس/g,'mercedes'],[/بي ام دبليو|بى ام دبليو|بي ام/g,'bmw'],[/فولكس فاجن|فولكسفاجن/g,'volkswagen'],[/ميتسوبيشي/g,'mitsubishi'],[/سوزوكي/g,'suzuki'],[/رينو/g,'renault'],[/فيات/g,'fiat'],[/سكودا/g,'skoda'],[/مازدا/g,'mazda'],[/جيب/g,'jeep'],[/ام جي|إم جي/g,'mg'],[/كورولا|كرولا/g,'corolla'],[/ياريس/g,'yaris'],[/كامري/g,'camry'],[/النترا/g,'elantra'],[/اكسنت/g,'accent'],[/توسان/g,'tucson'],[/سبورتاج/g,'sportage'],[/سيراتو/g,'cerato'],[/ريو/g,'rio'],[/صني/g,'sunny'],[/قشقاي/g,'qashqai'],[/لانسر/g,'lancer'],[/اوبترا/g,'optra'],[/افيو/g,'aveo'],[/سيفيك/g,'civic'],[/اكورد/g,'accord']
+];
+function searchVariants(value){
+ var q=normalizeSearchText(value),translated=q,variants=[q];
+ SEARCH_TRANSLATIONS.forEach(function(pair){translated=translated.replace(pair[0],pair[1]);});
+ translated=normalizeSearchText(translated);
+ if(translated&&translated!==q)variants.push(translated);
+ return variants;
+}
 function readFilters(){
  S.search=$('search').value.trim().toLowerCase();S.brand=$('brand-filter').value;S.model=$('model-filter').value;S.governorate=$('governorate-filter').value;S.city=$('city-filter').value;S.bodyFilter=$('body-filter').value;S.transmission=$('transmission-filter').value;S.fuel=$('fuel-filter').value;S.status=$('status-filter').value;S.minPrice=$('min-price').value?Number($('min-price').value):null;S.maxPrice=$('max-price').value?Number($('max-price').value):null;S.minYear=$('min-year').value?Number($('min-year').value):null;S.maxYear=$('max-year').value?Number($('max-year').value):null;S.maxKm=$('max-km').value?Number($('max-km').value):null;S.sort=$('sort-filter').value;
 }
 function getFilteredCars(){
  readFilters();
  var list=activeCars().filter(function(c){
-  var hay=[c.n,c.brand,c.model,c.g,c.city,c.t].join(' ').toLowerCase();
-  return inBudget(c)&&(!S.t||S.t==='الكل'||c.t===S.t)&&(!S.bodyType||c.t===S.bodyType)&&(!S.brand||c.brand===S.brand)&&(!S.model||c.model===S.model)&&(!S.governorate||c.g===S.governorate)&&(!S.city||c.city===S.city)&&(!S.bodyFilter||c.t===S.bodyFilter)&&(!S.transmission||c.tr===S.transmission)&&(!S.fuel||c.fuel===S.fuel)&&(!S.status||c.status===S.status)&&(!S.search||hay.indexOf(S.search)>-1)&&(S.minPrice===null||c.p>=S.minPrice)&&(S.maxPrice===null||c.p<=S.maxPrice)&&(S.minYear===null||c.y>=S.minYear)&&(S.maxYear===null||c.y<=S.maxYear)&&(S.maxKm===null||c.km<=S.maxKm);
+  var hay=normalizeSearchText([c.n,c.brand,c.model,c.g,c.city,c.t].join(' '));
+  var queries=searchVariants(S.search);
+  var searchMatch=!S.search||queries.some(function(q){return hay.indexOf(q)>-1;});
+  return inBudget(c)&&(!S.t||S.t==='الكل'||c.t===S.t)&&(!S.bodyType||c.t===S.bodyType)&&(!S.brand||c.brand===S.brand)&&(!S.model||c.model===S.model)&&(!S.governorate||c.g===S.governorate)&&(!S.city||c.city===S.city)&&(!S.bodyFilter||c.t===S.bodyFilter)&&(!S.transmission||c.tr===S.transmission)&&(!S.fuel||c.fuel===S.fuel)&&(!S.status||c.status===S.status)&&searchMatch&&(S.minPrice===null||c.p>=S.minPrice)&&(S.maxPrice===null||c.p<=S.maxPrice)&&(S.minYear===null||c.y>=S.minYear)&&(S.maxYear===null||c.y<=S.maxYear)&&(S.maxKm===null||c.km<=S.maxKm);
  });
  if(S.sort==='price-low')list.sort(function(a,b){return a.p-b.p});
  else if(S.sort==='price-high')list.sort(function(a,b){return b.p-a.p});
@@ -744,6 +759,9 @@ async function loadSheetData(){
 }
 
 S.favorites=readFavorites();
+// Prevent browsers from restoring an old mid-page scroll position on a fresh home-page visit.
+if('scrollRestoration' in history)history.scrollRestoration='manual';
+if(location.hash && location.hash!=='#favorites' && location.hash.indexOf('#car-')!==0){history.replaceState(null,'',location.pathname+location.search);}
 HAS_CARS_CACHE=loadCachedCars();
 if(HAS_CARS_CACHE)$('demo-disclaimer').hidden=true;
 renderAll();
