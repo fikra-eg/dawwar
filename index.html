@@ -173,11 +173,6 @@ a.art{display:block;text-decoration:none}
 .gallery-main{position:relative;border-radius:16px;overflow:hidden;background:#e6eaf1;aspect-ratio:16/10}
 .gallery-main>.tag{position:absolute;top:12px;inset-inline-start:12px;z-index:1}
 .gallery-main img{width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in}
-.gallery-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:2;width:40px;height:40px;border:0;border-radius:50%;background:rgba(6,18,50,.78);color:#fff;font-size:28px;line-height:1;display:grid;place-items:center;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.18)}
-.gallery-arrow:hover{background:rgba(6,18,50,.96)}
-.gallery-arrow.prev{inset-inline-start:12px}
-.gallery-arrow.next{inset-inline-end:12px}
-.gallery-arrow:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
 .gallery-main .tag{position:absolute;top:12px;inset-inline-start:12px;z-index:1}
 .gallery-count{position:absolute;bottom:12px;inset-inline-start:12px;background:rgba(6,18,50,.78);color:#fff;border-radius:7px;padding:3px 9px;font-size:13px}
 .gallery-thumbs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin-top:10px}
@@ -461,7 +456,7 @@ function saveFavorites(){try{localStorage.setItem(FAV_KEY,JSON.stringify(S.favor
 function favoriteButton(c){var active=S.favorites.indexOf(c.id)>-1;return '<button class="icon-btn '+(active?'active':'')+'" type="button" data-fav="'+escapeHTML(c.id)+'" aria-label="'+(active?'إزالة من المفضلة':'إضافة للمفضلة')+'" aria-pressed="'+active+'">'+(active?'♥':'♡')+'</button>';}
 function card(c,cmp){
  var on=S.pick.indexOf(c.id)>-1,dis=!on&&S.pick.length>=3,u='#car-'+encodeURIComponent(c.id),img=imagesFor(c)[0]||MAIN_IMAGE_FALLBACK;
- var tags='<div class="card-tags">'+(imgs.length>1?'<button class="gallery-arrow prev" type="button" data-gallery-step="-1" aria-label="الصورة السابقة">‹</button><button class="gallery-arrow next" type="button" data-gallery-step="1" aria-label="الصورة التالية">›</button>':'')+'<span class="tag '+(c.status==='sold'?'sold':c.status==='reserved'?'reserved': 'ok')+'">'+statusLabel(c)+'</span>'+(isFeatured(c)?'<span class="tag featured">مميز</span>':'')+'</div>';
+ var tags='<div class="card-tags"><span class="tag '+(c.status==='sold'?'sold':c.status==='reserved'?'reserved': 'ok')+'">'+statusLabel(c)+'</span>'+(isFeatured(c)?'<span class="tag featured">مميز</span>':'')+'</div>';
  return '<article class="card '+(c.status!=='available'?'res ':'')+(isFeatured(c)?'featured-card':'')+'"><a class="art" href="'+u+'" aria-label="تفاصيل '+escapeHTML(c.n)+'"><img src="'+escapeHTML(img)+'" alt="صورة توضيحية لـ '+escapeHTML(c.n)+'" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src=\''+MAIN_IMAGE_FALLBACK+'\'"></a>'+tags+'<div class="card-tools">'+favoriteButton(c)+'</div>'+
  '<div class="info"><h3><a href="'+u+'">'+escapeHTML(c.n)+' '+Y(c.y)+'</a></h3><p class="meta">'+f(c.km)+' كم · '+escapeHTML(c.g)+' · '+escapeHTML(c.tr)+'</p><div class="price-line"><div class="price">'+f(c.p)+' ج.م</div>'+(c.priceNegotiable?'<span class="price-old">قابل للتفاوض</span>':'')+'</div>'+(c.updatedAt?'<span class="rev">آخر تحديث: '+formatDate(c.updatedAt)+'</span>':'')+(c.reviewed?'<span class="rev">✓ تمت مراجعة بيانات الإعلان</span>':'<span class="rev">كود الإعلان: '+escapeHTML(c.id)+'</span>')+
  '<div class="acts"><a class="btn" href="'+u+'">التفاصيل</a>'+(cmp?'<label class="cmp"><input type="checkbox" data-compare="'+escapeHTML(c.id)+'"'+(on?' checked':'')+(dis?' disabled':'')+'> قارن</label>':'')+'</div></div></article>';
@@ -587,14 +582,13 @@ function resetFilters(){S.cat=null;S.t='الكل';S.bodyType=null;S.brand=null;S
 
 /* Events */
 document.addEventListener('click',function(e){
- var t=e.target.closest('[data-budget],[data-list-type],[data-fav],[data-body-type],[data-model],[data-thumb],[data-gallery-step],[data-admin-wa],[data-share],[data-report],[data-zoom]');
+ var t=e.target.closest('[data-budget],[data-list-type],[data-fav],[data-body-type],[data-model],[data-thumb],[data-admin-wa],[data-share],[data-report],[data-zoom]');
  if(!t)return;
  if(t.dataset.budget){S.cat=S.cat===t.dataset.budget?null:t.dataset.budget;renderGallery();$('gallery').scrollIntoView({behavior:'smooth'});}
  else if(t.dataset.listType!==undefined){var selectedType=t.dataset.listType||'';S.t=selectedType||'الكل';S.bodyType=selectedType||null;S.bodyFilter=selectedType;S.brand=null;S.model=null;$('brand-filter').value='';$('model-filter').value='';updateFilterOptions();$('body-filter').value=selectedType;renderBodyTypes();renderGallery();}
  else if(t.dataset.fav){var id=t.dataset.fav,idx=S.favorites.indexOf(id);if(idx>=0)S.favorites.splice(idx,1);else S.favorites.push(id);saveFavorites();renderAll();if(S.activeCar&&!$('detail').hidden){var active=CARS.filter(function(c){return c.id===S.activeCar})[0];if(active)detail(active);}showToast(idx>=0?'اتشالت من المفضلة.':'اتضافت للمفضلة.');}
  else if(t.dataset.bodyType){var selectedType=S.bodyType===t.dataset.bodyType?'':t.dataset.bodyType;S.bodyType=selectedType||null;S.t=selectedType||'الكل';S.bodyFilter=selectedType;S.brand=null;S.model=null;$('brand-filter').value='';$('model-filter').value='';updateFilterOptions();$('body-filter').value=selectedType;renderBodyTypes();renderGallery();$('gallery').scrollIntoView({behavior:'smooth'});}
  else if(t.dataset.model!==undefined){S.bodyType=S.bodyType||null;S.brand=t.dataset.modelBrand;S.model=t.dataset.model; $('brand-filter').value=S.brand;updateFilterOptions();$('brand-filter').value=S.brand;$('model-filter').value=S.model;renderGallery();$('gallery').scrollIntoView({behavior:'smooth'});}
- else if(t.dataset.galleryStep!==undefined){var c=CARS.filter(function(x){return x.id===S.activeCar})[0];if(c){var imgs=imagesFor(c);if(imgs.length>1){S.activeImage=(Math.min(S.activeImage,imgs.length-1)+(Number(t.dataset.galleryStep)>0?1:-1)+imgs.length)%imgs.length;detail(c);}}}
  else if(t.dataset.thumb!==undefined){S.activeImage=Number(t.dataset.thumb)||0;var c=CARS.filter(function(x){return x.id===S.activeCar})[0];if(c)detail(c);}
  else if(t.dataset.zoom){var z=$('gallery-main-img');if(z&&z.src){$('zoom-image').src=z.src;$('image-dialog').showModal();}}
  else if(t.dataset.adminWa){e.preventDefault();openAdminWhatsApp(t.dataset.adminWa);}
