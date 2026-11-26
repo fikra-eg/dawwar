@@ -200,7 +200,12 @@ a.art{display:block;text-decoration:none}
 .image-dialog{max-width:min(96vw,1100px);width:96vw;padding:12px;background:#061232;border-radius:14px;position:relative}
 .image-dialog::backdrop{background:rgba(3,9,24,.88)}
 .image-dialog img{display:block;max-width:100%;max-height:82vh;width:auto;height:auto;margin:auto;object-fit:contain}
-.image-dialog-close{position:absolute;top:8px;inset-inline-end:8px;z-index:2;width:40px;height:40px;border:0;border-radius:50%;background:#fff;color:#061232;font-size:28px;cursor:pointer}
+.image-dialog-close{position:absolute;top:12px;inset-inline-end:12px;z-index:5;display:grid;place-items:center;width:42px;height:42px;padding:0;border:0;border-radius:50%;background:#fff;color:#061232;font-size:28px;line-height:1;font-family:Arial,sans-serif;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.28)}
+.gallery-arrow{position:absolute;top:50%;z-index:2;transform:translateY(-50%);display:grid;place-items:center;width:44px;height:44px;padding:0;border:1px solid rgba(255,255,255,.65);border-radius:50%;background:rgba(6,18,50,.72);color:#fff;font:32px/1 Arial,sans-serif;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.2)}
+.gallery-arrow:hover{background:rgba(6,18,50,.94)}
+.gallery-arrow.prev{inset-inline-start:12px}
+.gallery-arrow.next{inset-inline-end:12px}
+.gallery-arrow:focus-visible,.image-dialog-close:focus-visible{outline:3px solid var(--amber);outline-offset:3px}
 .toast{position:fixed;bottom:24px;inset-inline:20px;margin:auto;width:fit-content;max-width:min(90vw,520px);z-index:30;background:var(--deep);color:#fff;padding:11px 17px;border-radius:10px;box-shadow:0 8px 25px rgba(0,0,0,.2);opacity:0;pointer-events:none;transform:translateY(10px);transition:.2s}
 .toast.show{opacity:1;transform:translateY(0)}
 .disabled-contact{display:block;text-align:center;font-size:13px;color:var(--muted);margin-top:7px}
@@ -547,7 +552,7 @@ function renderFavorites(){
 function renderAll(){renderBudget();renderFeatured();renderBodyTypes();updateFilterOptions();renderGallery();renderFavorites();}
 function imageGalleryMarkup(c){
  var imgs=imagesFor(c),idx=Math.min(S.activeImage,imgs.length-1);
- return '<div class="detail-gallery"><div class="gallery-main" data-zoom="1"><img id="gallery-main-img" src="'+escapeHTML(imgs[idx])+'" alt="صورة توضيحية '+escapeHTML(c.n)+'" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src=\''+MAIN_IMAGE_FALLBACK+'\'"><span class="tag '+(c.status==='sold'?'sold':c.status==='reserved'?'reserved':'ok')+'">'+statusLabel(c)+'</span><span class="gallery-count">'+Y(idx+1)+' / '+Y(imgs.length)+'</span></div><div class="gallery-thumbs">'+imgs.map(function(url,i){return '<button class="gallery-thumb '+(i===idx?'active':'')+'" type="button" data-thumb="'+i+'" aria-label="عرض الصورة '+Y(i+1)+'"><img src="'+escapeHTML(url)+'" alt="صورة مصغرة" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.opacity=.2"></button>'}).join('')+'</div><p class="gallery-disclaimer">'+(c.demo?'الصورة الخارجية للموديل، وباقي الصور استرشادية لتجربة المعرض وليست لنفس السيارة.':'الصور مرفقة مع الإعلان من صاحب العربية. راجع السيارة بنفسك أثناء المعاينة.')+'</p></div>';
+ return '<div class="detail-gallery"><div class="gallery-main" data-zoom="1"><img id="gallery-main-img" src="'+escapeHTML(imgs[idx])+'" alt="صورة توضيحية '+escapeHTML(c.n)+'" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src=\''+MAIN_IMAGE_FALLBACK+'\'"><span class="tag '+(c.status==='sold'?'sold':c.status==='reserved'?'reserved':'ok')+'">'+statusLabel(c)+'</span>'+(imgs.length>1?'<button class="gallery-arrow prev" type="button" data-gallery-step="-1" aria-label="الصورة السابقة">‹</button><button class="gallery-arrow next" type="button" data-gallery-step="1" aria-label="الصورة التالية">›</button>':'')+'<span class="gallery-count">'+Y(idx+1)+' / '+Y(imgs.length)+'</span></div><div class="gallery-thumbs">'+imgs.map(function(url,i){return '<button class="gallery-thumb '+(i===idx?'active':'')+'" type="button" data-thumb="'+i+'" aria-label="عرض الصورة '+Y(i+1)+'"><img src="'+escapeHTML(url)+'" alt="صورة مصغرة" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.opacity=.2"></button>'}).join('')+'</div><p class="gallery-disclaimer">'+(c.demo?'الصورة الخارجية للموديل، وباقي الصور استرشادية لتجربة المعرض وليست لنفس السيارة.':'الصور مرفقة مع الإعلان من صاحب العربية. راجع السيارة بنفسك أثناء المعاينة.')+'</p></div>';
 }
 function detail(c){
  S.activeCar=c.id;
@@ -582,7 +587,7 @@ function resetFilters(){S.cat=null;S.t='الكل';S.bodyType=null;S.brand=null;S
 
 /* Events */
 document.addEventListener('click',function(e){
- var t=e.target.closest('[data-budget],[data-list-type],[data-fav],[data-body-type],[data-model],[data-thumb],[data-admin-wa],[data-share],[data-report],[data-zoom]');
+ var t=e.target.closest('[data-budget],[data-list-type],[data-fav],[data-body-type],[data-model],[data-thumb],[data-gallery-step],[data-admin-wa],[data-share],[data-report],[data-zoom]');
  if(!t)return;
  if(t.dataset.budget){S.cat=S.cat===t.dataset.budget?null:t.dataset.budget;renderGallery();$('gallery').scrollIntoView({behavior:'smooth'});}
  else if(t.dataset.listType!==undefined){var selectedType=t.dataset.listType||'';S.t=selectedType||'الكل';S.bodyType=selectedType||null;S.bodyFilter=selectedType;S.brand=null;S.model=null;$('brand-filter').value='';$('model-filter').value='';updateFilterOptions();$('body-filter').value=selectedType;renderBodyTypes();renderGallery();}
@@ -590,6 +595,7 @@ document.addEventListener('click',function(e){
  else if(t.dataset.bodyType){var selectedType=S.bodyType===t.dataset.bodyType?'':t.dataset.bodyType;S.bodyType=selectedType||null;S.t=selectedType||'الكل';S.bodyFilter=selectedType;S.brand=null;S.model=null;$('brand-filter').value='';$('model-filter').value='';updateFilterOptions();$('body-filter').value=selectedType;renderBodyTypes();renderGallery();$('gallery').scrollIntoView({behavior:'smooth'});}
  else if(t.dataset.model!==undefined){S.bodyType=S.bodyType||null;S.brand=t.dataset.modelBrand;S.model=t.dataset.model; $('brand-filter').value=S.brand;updateFilterOptions();$('brand-filter').value=S.brand;$('model-filter').value=S.model;renderGallery();$('gallery').scrollIntoView({behavior:'smooth'});}
  else if(t.dataset.thumb!==undefined){S.activeImage=Number(t.dataset.thumb)||0;var c=CARS.filter(function(x){return x.id===S.activeCar})[0];if(c)detail(c);}
+ else if(t.dataset.galleryStep!==undefined){var c=CARS.filter(function(x){return x.id===S.activeCar})[0];if(c){var imgs=imagesFor(c);if(imgs.length>1){S.activeImage=(S.activeImage+Number(t.dataset.galleryStep)+imgs.length)%imgs.length;detail(c);}}}
  else if(t.dataset.zoom){var z=$('gallery-main-img');if(z&&z.src){$('zoom-image').src=z.src;$('image-dialog').showModal();}}
  else if(t.dataset.adminWa){e.preventDefault();openAdminWhatsApp(t.dataset.adminWa);}
  else if(t.dataset.share){shareCar(t.dataset.share);}
