@@ -196,7 +196,7 @@ a.art{display:block;text-decoration:none}
 .report-dialog select,.report-dialog textarea{width:100%;border:1px solid var(--line);border-radius:9px;padding:10px;background:var(--bg);color:var(--text);font:inherit}
 .report-dialog textarea{min-height:90px;resize:vertical}
 .dialog-actions{display:flex;gap:9px;margin-top:14px}
-.gallery-main{cursor:zoom-in}
+.gallery-main{cursor:zoom-in;touch-action:pan-y;user-select:none;-webkit-user-select:none}
 .image-dialog{max-width:min(96vw,1100px);width:96vw;padding:12px;background:#061232;border-radius:14px;position:relative}
 .image-dialog::backdrop{background:rgba(3,9,24,.88)}
 .image-dialog img{display:block;max-width:100%;max-height:82vh;width:auto;height:auto;margin:auto;object-fit:contain}
@@ -595,6 +595,28 @@ document.addEventListener('click',function(e){
  else if(t.dataset.share){shareCar(t.dataset.share);}
  else if(t.dataset.report){openReport(t.dataset.report);}
 });
+
+// Mobile gallery swipe: horizontal finger movement switches the main photo.
+var galleryTouchStart=null;
+document.addEventListener('touchstart',function(e){
+ var main=e.target.closest('.gallery-main');
+ if(!main||!e.touches||e.touches.length!==1){galleryTouchStart=null;return;}
+ galleryTouchStart={x:e.touches[0].clientX,y:e.touches[0].clientY};
+},{passive:true});
+document.addEventListener('touchend',function(e){
+ if(!galleryTouchStart||!e.changedTouches||!e.changedTouches.length)return;
+ var dx=e.changedTouches[0].clientX-galleryTouchStart.x;
+ var dy=e.changedTouches[0].clientY-galleryTouchStart.y;
+ galleryTouchStart=null;
+ if(Math.abs(dx)<45||Math.abs(dx)<=Math.abs(dy))return;
+ var c=CARS.filter(function(x){return x.id===S.activeCar})[0];
+ if(!c)return;
+ var imgs=imagesFor(c);
+ if(imgs.length<2)return;
+ S.activeImage=(Math.min(S.activeImage,imgs.length-1)+(dx<0?1:-1)+imgs.length)%imgs.length;
+ detail(c);
+},{passive:true});
+document.addEventListener('touchcancel',function(){galleryTouchStart=null;},{passive:true});
 
 document.addEventListener('change',function(e){
  var id=e.target.dataset&&e.target.dataset.compare;if(id){var i=S.pick.indexOf(id);if(i>-1)S.pick.splice(i,1);else if(S.pick.length<3)S.pick.push(id);renderGallery();}
