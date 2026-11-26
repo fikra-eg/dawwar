@@ -632,7 +632,7 @@ window.addEventListener('storage',function(e){if(e.key===FAV_KEY){S.favorites=re
 
 /* Optional Google Sheets read-only JSON endpoint. Keep blank to use demo data. */
 function normalizeSheetCar(row){
- var imgList=String(row.images||row.img||'').split(/[\n|;]/).map(function(x){return x.trim()}).filter(Boolean);
+ var imgList=String(row.images||row.img||'').split(/[\n\r,|;]+/).map(function(x){return x.trim()}).filter(function(x,i,a){return /^https:\/\//i.test(x)&&a.indexOf(x)===i;});
  var brand=row.brand||row.make||'',model=row.model||'',name=row.name||row.n||[brand,model].filter(Boolean).join(' ');
  var status=String(row.status||'available').toLowerCase();
  return {id:String(row.id||''),brand:brand,model:model,n:name,y:Number(row.year||row.y||0),km:Number(row.mileage||row.km||0),p:Number(row.price||row.p||0),g:row.governorate||row.g||'',city:row.city||'',s:row.sellerType||row.s||'فرد',t:row.bodyType||row.t||'سيدان',status:String(status).toLowerCase(),st:String(status).toLowerCase()==='reserved'?1:0,c:row.colorCode||'#5B6E99',e:row.engine||row.e||'',tr:row.transmission||row.tr||'',fuel:row.fuelType||row.fuel||'',col:row.color||row.col||'',cd:row.condition||row.cd||'',ft:row.features||row.ft||'',sellerWhatsApp:row.sellerWhatsApp||'',sellerDescription:row.sellerDescription||'',images:imgList,demo:false,priceNegotiable:String(row.priceNegotiable||row.negotiable||'').toLowerCase()==='true',featured:String(row.isFeatured||row.featured||'').toLowerCase()==='true',featuredUntil:row.featuredUntil||'',reviewed:String(row.reviewed||'').toLowerCase()==='true',createdAt:row.createdAt||'',updatedAt:row.updatedAt||''};
