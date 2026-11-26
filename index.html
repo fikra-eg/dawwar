@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar-EG" dir="rtl">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>دوّر — معرض العربيات في مصر</title>
+<title>دوّر | عربيات مستعملة للبيع في مصر</title>
+<meta name="description" content="دوّر منصة لعرض إعلانات السيارات المستعملة في مصر، ومقارنة الأسعار والمواصفات والتواصل المباشر مع البائعين.">
+<meta name="theme-color" content="#0B1F4A">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lalezar&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
@@ -246,8 +248,8 @@ a.art{display:block;text-decoration:none}
    <div style="display:flex;align-items:center;gap:12px">
     <a class="nav-fav" href="#favorites" aria-label="المفضلة">♡ المفضلة <span class="fav-count" id="fav-count">0</span></a></div>
   </nav>
-  <h1>بتدوّر على عربية في حدود كام؟</h1>
-  <p class="lead">اختار ميزانيتك، اتفرج على العربيات وقارن براحتك. ولما تلاقي اللي يناسبك، كلّم صاحبها مباشرة.</p>
+  <h1>بتدور على عربية في حدود ميزانيتك؟</h1>
+  <p class="lead">شوف العربيات المعروضة، قارن الأسعار والمواصفات، ولما تلاقي اللي يناسبك اتواصل مع البائع مباشرة.</p>
   <div class="plates" id="plates"></div>
  </div>
 </header>
@@ -416,7 +418,7 @@ function sellerLink(c){
 }
 function activeCars(){return CARS.filter(function(c){return c.status!=='hidden'});}
 function browseableCars(){return activeCars().filter(function(c){return c.status!=='sold'});}
-function formatDate(value){if(!value)return 'غير محدد';var d=new Date(value);if(isNaN(d.getTime()))return escapeHTML(value);return new Intl.DateTimeFormat('ar-EG',{day:'numeric',month:'long',year:'numeric'}).format(d);}
+function formatDate(value){if(!value)return '';var d=new Date(value);if(isNaN(d.getTime()))return escapeHTML(value);return new Intl.DateTimeFormat('ar-EG',{day:'numeric',month:'long',year:'numeric'}).format(d);}
 function cat(){return BUDGETS.filter(function(b){return b.id===S.cat})[0];}
 function inBudget(c){var b=cat();return !b||(c.p!==null&&c.p!==undefined&&Number(c.p)>=b.lo&&Number(c.p)<b.hi);}
 function showToast(text){var el=$('toast');el.textContent=text;el.classList.add('show');clearTimeout(showToast.timer);showToast.timer=setTimeout(function(){el.classList.remove('show')},2800);}
@@ -429,11 +431,18 @@ function card(c,cmp){
  var meta=[c.km!==null&&c.km!==undefined?f(c.km)+' كم':'',c.g||'',c.tr||''].filter(Boolean).map(escapeHTML).join(' · ');
  var tags='<div class="card-tags"><span class="tag '+(c.status==='sold'?'sold':c.status==='reserved'?'reserved':'ok')+'">'+statusLabel(c)+'</span>'+(isFeatured(c)?'<span class="tag featured">مميز</span>':'')+'</div>';
  return '<article class="card '+(c.status!=='available'?'res ':'')+(isFeatured(c)?'featured-card':'')+'"><a class="art" href="'+u+'" aria-label="تفاصيل '+escapeHTML(c.n)+'"><img src="'+escapeHTML(img)+'" alt="صورة العربية '+escapeHTML(c.n)+'" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.parentNode.classList.add(\'image-failed\');this.remove()"></a>'+tags+'<div class="card-tools">'+favoriteButton(c)+'</div>'+
- '<div class="info"><h3><a href="'+u+'">'+title+'</a></h3>'+(meta?'<p class="meta">'+meta+'</p>':'')+'<div class="price-line"><div class="price">'+(c.p!==null&&c.p!==undefined&&c.p>0?f(c.p)+' ج.م':'السعر عند التواصل')+'</div>'+(c.priceNegotiable?'<span class="price-old">قابل للتفاوض</span>':'')+'</div>'+(c.updatedAt?'<span class="rev">آخر تحديث: '+formatDate(c.updatedAt)+'</span>':'')+
+ '<div class="info"><h3><a href="'+u+'">'+title+'</a></h3>'+(meta?'<p class="meta">'+meta+'</p>':'')+'<div class="price-line"><div class="price">'+(c.p!==null&&c.p!==undefined&&c.p>0?f(c.p)+' جنيه':'السعر عند التواصل')+'</div>'+(c.priceNegotiable?'<span class="price-old">قابل للتفاوض</span>':'')+'</div>'+(c.updatedAt?'<span class="rev">آخر تحديث: '+formatDate(c.updatedAt)+'</span>':'')+
  '<div class="acts"><a class="btn" href="'+u+'">التفاصيل</a>'+(cmp?'<label class="cmp"><input type="checkbox" data-compare="'+escapeHTML(c.id)+'"'+(on?' checked':'')+(dis?' disabled':'')+'> قارن</label>':'')+'</div></div></article>';
 }
 function renderBudget(){
- $('plates').innerHTML=BUDGETS.map(function(b){return '<button class="plate" data-budget="'+b.id+'" aria-pressed="'+(S.cat===b.id)+'"><i>دوّر · مصر</i><b>'+b.l+'</b><small>'+b.u+'</small></button>'}).join('');
+ var available=browseableCars();
+ var matching=BUDGETS.filter(function(b){return available.some(function(c){return Number(c.p)>=b.lo&&Number(c.p)<b.hi;});});
+ if(matching.length){
+  $('plates').innerHTML=matching.map(function(b){return '<button class="plate" data-budget="'+b.id+'" aria-pressed="'+(S.cat===b.id)+'"><i>دوّر · مصر</i><b>'+b.l+'</b><small>'+b.u+'</small></button>';}).join('');
+ }else{
+  var message=DATA_STATE==='loading'?'بنحمّل العربيات المتاحة...':DATA_STATE==='error'?'تعذر تحميل العربيات حاليًا.':'مفيش عربيات متاحة ضمن فئات الميزانية دلوقتي.';
+  $('plates').innerHTML='<p class="budget-empty">'+message+'</p>';
+ }
 }
 function renderFeatured(){
  var list=CARS.filter(isFeatured).sort(function(a,b){return String(b.featuredUntil||'').localeCompare(String(a.featuredUntil||''));});
@@ -511,7 +520,7 @@ function renderGallery(){
  var list=getFilteredCars(),typeList=Array.from(new Set(activeCars().map(function(c){return c.t}).filter(Boolean)));
  $('types').innerHTML='<button class="chip" data-list-type="" aria-pressed="'+(!S.t||S.t==='الكل')+'">كل الأنواع</button>'+typeList.map(function(t){return '<button class="chip" data-list-type="'+escapeHTML(t)+'" aria-pressed="'+(S.t===t)+'">'+escapeHTML(t)+'</button>'}).join('');
  var hasFilters=S.cat||S.bodyType||S.brand||S.model||S.search||S.governorate||S.city||S.bodyFilter||S.transmission||S.fuel||S.status||S.minPrice!==null||S.maxPrice!==null||S.minYear!==null||S.maxYear!==null||S.maxKm!==null;
- $('gt').textContent=hasFilters?'العربيات اللي تناسب بحثك':'كل العربيات';
+ $('gt').textContent=hasFilters?'العربيات اللي تناسب بحثك':'العربيات المعروضة للبيع';
  $('gs').textContent=hasFilters?'تقدر تغيّر الفلاتر أو تمسحها عشان تشوف اختيارات أكتر.':'استخدم البحث والفلاتر عشان توصل للعربية اللي بتدور عليها.';
  if(DATA_STATE==='loading'){
   // On a first visit, avoid a blocking text message; cached visits render real cars immediately.
@@ -546,11 +555,10 @@ function detail(c){
  var wa=c.status==='sold'?'':sellerLink(c),fav=S.favorites.indexOf(c.id)>-1;
  var contact=wa?'<a class="btn big" href="'+wa+'" target="_blank" rel="noopener">كلّم صاحب العربية على واتساب</a>':(c.status==='sold'?'<p class="contact-unavailable">الإعلان ده متسجل كمباع.</p>':'<p class="contact-unavailable">رقم التواصل مع صاحب الإعلان غير متاح حاليًا.</p>');
  var desc=String(c.sellerDescription||'').trim();
- var descHtml=desc?escapeHTML(desc).replace(/\n/g,'<br>'):'مفيش تفاصيل إضافية مضافة للإعلان حاليًا.';
- var byline=desc?'الوصف ده مقدّم من صاحب الإعلان. اتأكد من التفاصيل وقت المعاينة.':'اسأل البائع عن أي تفاصيل إضافية محتاج تعرفها قبل المعاينة.';
+ var descSection=desc?'<div class="seller-note"><h3>تفاصيل من صاحب الإعلان</h3><p>'+escapeHTML(desc).replace(/\n/g,'<br>')+'</p><span class="byline">الوصف ده مقدّم من صاحب الإعلان. راجع التفاصيل معاه وقت المعاينة.</span></div>':'';
  var meta=[c.createdAt?'<span>تاريخ الإعلان: '+formatDate(c.createdAt)+'</span>':'',c.updatedAt?'<span>آخر تحديث: '+formatDate(c.updatedAt)+'</span>':'',isFeatured(c)?'<span>إعلان مميز</span>':''].filter(Boolean).join('');
- var title=escapeHTML(c.n)+(c.y?' '+Y(c.y):''),priceLabel=c.p!==null&&c.p!==undefined&&c.p>0?f(c.p)+' ج.م':'السعر عند التواصل';
- $('detail').innerHTML='<div class="wrap"><a class="back" href="#gallery">← رجوع للعربيات</a><div class="dg">'+imageGalleryMarkup(c)+'<div><div class="section-head"><div><h2>'+title+'</h2><div class="price">'+priceLabel+'</div></div><button class="icon-btn '+(fav?'active':'')+'" type="button" data-fav="'+escapeHTML(c.id)+'" aria-label="إضافة للمفضلة" aria-pressed="'+fav+'">'+(fav?'♥':'♡')+'</button></div>'+(meta?'<div class="detail-meta">'+meta+'</div>':'')+'<div class="fts">'+String(c.ft||'').split('،').filter(Boolean).map(function(x){return '<span>'+escapeHTML(x.trim())+'</span>'}).join('')+'</div>'+tb+'<div class="seller-note"><h3>تفاصيل من صاحب الإعلان</h3><p>'+descHtml+'</p><span class="byline">'+byline+'</span></div><div class="detail-actions">'+contact+'<button class="btn secondary" type="button" data-share="'+escapeHTML(c.id)+'">مشاركة الإعلان</button></div><p class="rev">قبل الاتفاق، عاين العربية على الطبيعة وراجع الرخصة والملكية وبيانات العربية، واستعن بفني متخصص للفحص.</p></div></div>'+
+ var title=escapeHTML(c.n)+(c.y?' '+Y(c.y):''),priceLabel=c.p!==null&&c.p!==undefined&&c.p>0?f(c.p)+' جنيه':'السعر عند التواصل';
+ $('detail').innerHTML='<div class="wrap"><a class="back" href="#gallery">← رجوع للعربيات</a><div class="dg">'+imageGalleryMarkup(c)+'<div><div class="section-head"><div><h2>'+title+'</h2><div class="price">'+priceLabel+'</div></div><button class="icon-btn '+(fav?'active':'')+'" type="button" data-fav="'+escapeHTML(c.id)+'" aria-label="إضافة للمفضلة" aria-pressed="'+fav+'">'+(fav?'♥':'♡')+'</button></div>'+(meta?'<div class="detail-meta">'+meta+'</div>':'')+'<div class="fts">'+String(c.ft||'').split('،').filter(Boolean).map(function(x){return '<span>'+escapeHTML(x.trim())+'</span>'}).join('')+'</div>'+tb+descSection+'<div class="detail-actions">'+contact+'<button class="btn secondary" type="button" data-share="'+escapeHTML(c.id)+'">مشاركة الإعلان</button></div><p class="rev">قبل الاتفاق، عاين العربية على الطبيعة وراجع الرخصة والملكية وبيانات العربية، واستعن بفني متخصص للفحص.</p></div></div>'+
  (rel.length?'<h2 style="margin-top:46px">إعلانات ممكن تناسبك</h2><div class="grid">'+rel.map(function(x){return card(x,false)}).join('')+'</div>':'')+'</div>';
 }
 function route(){
@@ -564,7 +572,7 @@ function route(){
  $('home').hidden=!!c||isFavorites;$('favorites-page').hidden=!isFavorites;$('detail').hidden=!c;$('bar').style.display=(c||isFavorites)?'none':'';
  if(c){S.activeImage=0;detail(c);window.scrollTo(0,0);document.title=c.n+' — دوّر';}
  else if(isFavorites){S.activeCar=null;renderFavorites();window.scrollTo(0,0);document.title='المفضلة — دوّر';}
- else{document.title='دوّر — معرض العربيات في مصر';var el=h&&$(h);if(el)el.scrollIntoView();}
+ else{document.title='دوّر | عربيات مستعملة للبيع في مصر';var el=h&&$(h);if(el)el.scrollIntoView();}
 }
 async function shareCar(id){var c=CARS.filter(function(x){return x.id===id})[0];if(!c)return;var url=location.href.split('#')[0]+'#car-'+encodeURIComponent(id);try{if(navigator.share){await navigator.share({title:c.n+' — دوّر',text:'شوف العربية دي على دوّر',url:url});}else if(navigator.clipboard&&navigator.clipboard.writeText){await navigator.clipboard.writeText(url);showToast('لينك الإعلان اتنسخ.');}else{window.prompt('انسخ رابط الإعلان:',url);}}catch(e){if(e&&e.name!=='AbortError')showToast('مش قادر أشارك الرابط دلوقتي.');}}
 function updateFiltersAndRender(){S.cat=null;renderGallery();}
@@ -628,7 +636,8 @@ $('clear-favorites').onclick=function(){if(!S.favorites.length){showToast('ال�
 $('go').onclick=function(){
  var P=S.pick.map(function(id){return CARS.filter(function(c){return c.id===id})[0]}).filter(Boolean);
  if(P.length<2){showToast('اختار عربيتين على الأقل للمقارنة.');return;}
- var rows=[['السعر',function(c){return c.p!==null&&c.p!==undefined&&c.p>0?f(c.p)+' ج.م':'عند التواصل'}],['السنة',function(c){return c.y?Y(c.y):'غير متاح'}],['الكيلومترات',function(c){return c.km!==null&&c.km!==undefined?f(c.km)+' كم':'غير متاح'}],['الماركة',function(c){return c.brand}],['الموديل',function(c){return c.model}],['النوع',function(c){return c.t}],['ناقل الحركة',function(c){return c.tr}],['الوقود',function(c){return c.fuel}],['المحافظة',function(c){return c.g}],['السعر قابل للتفاوض',function(c){return c.priceNegotiable?'نعم':'لا'}],['الحالة',function(c){return statusLabel(c)}],['آخر تحديث',function(c){return c.updatedAt?formatDate(c.updatedAt):'غير محدد'}]];
+ var rows=[['السعر',function(c){return c.p!==null&&c.p!==undefined&&c.p>0?f(c.p)+' جنيه':'عند التواصل'}],['السنة',function(c){return c.y?Y(c.y):'غير متاح'}],['الكيلومترات',function(c){return c.km!==null&&c.km!==undefined?f(c.km)+' كم':'غير متاح'}],['الماركة',function(c){return c.brand}],['الموديل',function(c){return c.model}],['النوع',function(c){return c.t}],['ناقل الحركة',function(c){return c.tr}],['الوقود',function(c){return c.fuel}],['المحافظة',function(c){return c.g}],['السعر قابل للتفاوض',function(c){return c.priceNegotiable?'نعم':'لا'}],['الحالة',function(c){return statusLabel(c)}],['آخر تحديث',function(c){return c.updatedAt?formatDate(c.updatedAt):''}]];
+ rows=rows.filter(function(r){return P.some(function(c){var value=r[1](c);return value!==null&&value!==undefined&&String(value).trim()!=='';});});
  var h='<table><thead><tr><th>المقارنة</th>'+P.map(function(c){return '<th>'+escapeHTML(c.n)+'</th>'}).join('')+'</tr></thead><tbody>';
  rows.forEach(function(r){h+='<tr><td>'+r[0]+'</td>'+P.map(function(c){return '<td>'+escapeHTML(r[1](c))+'</td>'}).join('')+'</tr>';});
  $('tbl').innerHTML=h+'</tbody></table>';$('dlg').showModal();
