@@ -475,6 +475,7 @@ function card(c,cmp,priority){
  '<div class="info"><h3><a href="'+u+'">'+title+'</a></h3>'+(meta?'<p class="meta">'+meta+'</p>':'')+'<div class="price-line"><div class="price">'+(c.p!==null&&c.p!==undefined&&c.p>0?f(c.p)+' جنيه':'السعر عند التواصل')+'</div>'+(c.priceNegotiable?'<span class="price-old">قابل للتفاوض</span>':'')+'</div>'+(c.updatedAt?'<span class="rev">آخر تحديث: '+formatDate(c.updatedAt)+'</span>':'')+
  '<div class="acts"><a class="btn" href="'+u+'">التفاصيل</a>'+(cmp?'<label class="cmp"><input type="checkbox" data-compare="'+escapeHTML(c.id)+'"'+(on?' checked':'')+(dis?' disabled':'')+'> قارن</label>':'')+'</div></div></article>';
 }
+function renderBudget(){
  var available=browseableCars();
  var matching=BUDGETS.filter(function(b){return available.some(function(c){return c.p!==null&&c.p!==undefined&&Number(c.p)>=b.lo&&Number(c.p)<b.hi;});});
  if(matching.length){
@@ -583,6 +584,7 @@ function searchMatches(haystack,query){
  });
 }
 
+function readFilters(){
  S.search=$('search').value.trim().toLowerCase();S.brand=$('brand-filter').value;S.model=$('model-filter').value;S.governorate=$('governorate-filter').value;S.city=$('city-filter').value;S.bodyFilter=$('body-filter').value;S.transmission=$('transmission-filter').value;S.fuel=$('fuel-filter').value;S.status=$('status-filter').value;S.minPrice=$('min-price').value?Number($('min-price').value):null;S.maxPrice=$('max-price').value?Number($('max-price').value):null;S.minYear=$('min-year').value?Number($('min-year').value):null;S.maxYear=$('max-year').value?Number($('max-year').value):null;S.maxKm=$('max-km').value?Number($('max-km').value):null;S.sort=$('sort-filter').value;
 }
 function getFilteredCars(){
